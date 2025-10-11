@@ -1,0 +1,54 @@
+
+╔═══════════════════════════════════════════════════════════════╗
+║  ✅ HERO SEKCE AKTUALIZOVÁNA - BÍLO-ČERNÝ GRADIENT + MŘÍŽKA  ║
+╚═══════════════════════════════════════════════════════════════╝
+
+🎨 CO BYLO ZMĚNĚNO:
+
+✓ Pozadí Hero sekce:
+  - Bílo-černý gradient (white → gray-100 → gray-900)
+  - Grid mřížkování 40x40px s opacity 0.3
+  - Jemný gradient overlay pro lepší kontrast textu
+
+✓ Vylepšené statistiky:
+  - Více průhledné pozadí (bg-white/90)
+  - Přidán border pro lepší definici
+  - Vylepšené stíny (shadow-xl)
+
+✓ Nové CSS utility třídy:
+  - .grid-pattern (standardní mřížka)
+  - .grid-pattern-dots (tečkovaná mřížka)
+  - .grid-pattern-large (velká mřížka)
+  - .hero-grid-bg (kompletní pozadí)
+
+📚 DOKUMENTACE:
+
+✓ Vytvořen GRID_PATTERNS.md s:
+  - 4 základní grid varianty
+  - 4 barevné varianty gradientů
+  - 4 kompletní vzory (kombinace)
+  - CSS utility třídy
+  - Responzivní tipy
+  - Příklady použití
+
+═══════════════════════════════════════════════════════════════
+
+🚀 JAK VYZKOUŠET:
+
+1. Otevřete http://localhost:3000 (nebo restartujte server)
+2. Uvidíte nový bílo-černý gradient s mřížkou
+3. Pro změnu patternu viz GRID_PATTERNS.md
+
+🎨 JAK ZMĚNIT GRID PATTERN:
+
+Otevřete: src/components/Hero.tsx (řádky 10-24)
+Viz různé varianty v: GRID_PATTERNS.md
+
+Příklady:
+- Větší mřížka: backgroundSize: '80px 80px'
+- Tečkovaný: radial-gradient(circle, ...)
+- Jemnější: opacity: 0.2
+- Jiná barva: rgba(0,0,255,0.1) pro modrou
+
+═══════════════════════════════════════════════════════════════
+
