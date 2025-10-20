@@ -114,12 +114,12 @@ export default function Header() {
               <Link
                 href="/kontakt"
                 className={`
-                  px-6 py-2.5 font-semibold rounded-full transition-all
+                  px-6 py-2.5 font-semibold rounded-full transition-all hover:scale-105 shadow-lg hover:shadow-xl
                   ${isScrolled 
-                    ? 'bg-blue-600 text-white hover:bg-blue-700' 
+                    ? 'bg-gradient-to-r from-[#0B1D36] to-[#FFC52E] text-white' 
                     : useWhiteText 
-                      ? 'bg-yellow-500 text-gray-900 hover:bg-yellow-400 border border-yellow-400' 
-                      : 'bg-blue-600 text-white hover:bg-blue-700'
+                      ? 'bg-gradient-to-r from-[#FFC52E] to-[#0B1D36] text-black' 
+                      : 'bg-gradient-to-r from-[#0B1D36] to-[#FFC52E] text-white'
                   }
                 `}
               >

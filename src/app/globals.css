@@ -206,3 +206,40 @@ html {
   pointer-events: none;
 }
 
+
+/* Formulářové prvky - tmavý čitelný text */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+select,
+textarea {
+  color: #111827 !important;
+  background-color: #ffffff !important;
+  caret-color: #0b66d1 !important;
+}
+
+input[type="text"]::placeholder,
+input[type="email"]::placeholder,
+input[type="tel"]::placeholder,
+textarea::placeholder {
+  color: #9ca3af !important;
+  opacity: 1;
+}
+
+/* Plynulá animace gradientu - přelívání */
+@keyframes gradient-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-flow 3s ease-in-out infinite;
+}

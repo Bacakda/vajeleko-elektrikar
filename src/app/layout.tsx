@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import FloatingCallButton from '@/components/FloatingCallButton'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -48,7 +49,10 @@ export default function RootLayout({
         <link rel="preload" as="image" href="/images/services/hromosvod.webp" />
         <link rel="preload" as="image" href="/images/services/revize.webp" />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        {children}
+        <FloatingCallButton />
+      </body>
     </html>
   )
 }

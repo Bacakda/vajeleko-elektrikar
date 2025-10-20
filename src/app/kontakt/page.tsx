@@ -37,7 +37,7 @@ export default function ContactPage() {
       <Header />
       
       {/* Hero Section pro kontakt */}
-      <section className="pt-32 pb-20">
+      <section className="pt-20 pb-12 sm:pt-32 sm:pb-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
@@ -45,10 +45,10 @@ export default function ContactPage() {
             transition={isMobile ? { duration: 0.3 } : { duration: 0.6 }}
             className="text-center max-w-4xl mx-auto"
           >
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-4 sm:mb-6">
               Kontaktujte <span className="gradient-text">nás</span>
             </h1>
-            <p className="text-xl text-gray-600">
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
               Jsme tu pro vás 24/7. Neváhejte se na nás obrátit s jakýmkoliv dotazem nebo požadavkem.
             </p>
           </motion.div>

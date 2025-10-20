@@ -8,13 +8,10 @@ import {
   EnvelopeIcon,
   MapPinIcon,
 } from '@heroicons/react/24/outline'
-import PhoneModal from './PhoneModal'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
-  const [isPhoneModalOpen, setIsPhoneModalOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
-
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768);
@@ -333,25 +330,7 @@ export default function Footer() {
         </motion.div>
       </div>
 
-      {/* Quick Call Button */}
-      <motion.button
-        onClick={() => setIsPhoneModalOpen(true)}
-        initial={isMobile ? { opacity: 0 } : { opacity: 0 }}
-        whileInView={isMobile ? { opacity: 1 } : { opacity: 1 }}
-        viewport={{ once: true }}
-        transition={isMobile ? { duration: 0.3 } : { delay: 0.4, duration: 0.6 }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-        className="fixed bottom-4 sm:bottom-8 right-4 sm:right-8 w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-r from-blue-600 to-electric-500 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all z-50"
-      >
-        <PhoneIcon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-      </motion.button>
 
-      {/* Phone Modal */}
-      <PhoneModal 
-        isOpen={isPhoneModalOpen} 
-        onClose={() => setIsPhoneModalOpen(false)} 
-      />
     </footer>
   )
 }
