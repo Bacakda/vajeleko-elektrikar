@@ -159,8 +159,8 @@ export default function Header() {
       >
         <div 
           className={`
-            fixed top-0 right-0 h-screen w-80 bg-white/95 backdrop-blur-xl border-l-2 border-gray-200 shadow-2xl
-            transform transition-all duration-300 ease-out overflow-hidden rounded-l-3xl
+            fixed top-0 right-0 max-h-screen w-80 bg-white/95 backdrop-blur-xl border-l-2 border-gray-200 shadow-2xl
+            transform transition-all duration-300 ease-out overflow-y-auto rounded-l-3xl
             ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}
           `}
         >
