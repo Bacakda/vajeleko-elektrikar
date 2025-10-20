@@ -1,0 +1,15 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0B1D36;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a3a52;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+  <text x="600" y="120" font-size="60" font-weight="bold" fill="#FFFFFF" text-anchor="middle" font-family="Arial, sans-serif">Naše Služby</text>
+  <text x="600" y="220" font-size="36" fill="#FFC52E" text-anchor="middle" font-family="Arial, sans-serif">Elektroinstalace • Tepelná čerpadla • Fotovoltaika</text>
+  <text x="600" y="310" font-size="32" fill="#E0E0E0" text-anchor="middle" font-family="Arial, sans-serif">Zabezpečení • Kamerové systémy • Hromosvody</text>
+  <text x="600" y="400" font-size="32" fill="#E0E0E0" text-anchor="middle" font-family="Arial, sans-serif">Revize • 24/7 Pohotovost</text>
+  <text x="600" y="500" font-size="28" fill="#FFC52E" text-anchor="middle" font-family="Arial, sans-serif">🚀 Kompletní řešení pro váš domov a firmu</text>
+  <rect x="0" y="600" width="1200" height="30" fill="#FFC52E"/>
+</svg>

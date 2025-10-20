@@ -1,0 +1,22 @@
+# VaJeleko s.r.o - Robots configuration
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+Disallow: /private/
+
+# Crawl delay
+Crawl-delay: 0.5
+
+# Sitemaps
+Sitemap: https://vajeleko.cz/sitemap.xml
+
+# Specific rules for Google
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Specific rules for Bing
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
