@@ -1,4 +1,4 @@
-/* Custom Animations */
+/* Custom Animations - Optimized for Performance */
 
 @keyframes float {
   0%, 100% {
@@ -71,49 +71,61 @@
 
 /* Utility Classes */
 .animate-float {
-  animation: float 3s ease-in-out infinite;
+  animation: float 4s ease-in-out infinite;
+  will-change: transform;
 }
 
 .animate-pulse-slow {
-  animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  animation: pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  will-change: opacity;
 }
 
 .animate-slide-in-right {
-  animation: slide-in-right 0.5s ease-out;
+  animation: slide-in-right 0.6s ease-out forwards;
+  will-change: transform, opacity;
 }
 
 .animate-slide-in-left {
-  animation: slide-in-left 0.5s ease-out;
+  animation: slide-in-left 0.6s ease-out forwards;
+  will-change: transform, opacity;
 }
 
 .animate-fade-in {
-  animation: fade-in 0.5s ease-out;
+  animation: fade-in 0.6s ease-out forwards;
+  will-change: opacity;
 }
 
 .animate-scale-in {
-  animation: scale-in 0.5s ease-out;
+  animation: scale-in 0.6s ease-out forwards;
+  will-change: transform, opacity;
 }
 
 .animate-rotate {
   animation: rotate 2s linear infinite;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
-/* Hover Effects */
+/* Hover Effects - GPU Accelerated */
 .hover-lift {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .hover-lift:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  transform: translateY(-8px) translateZ(0);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 }
 
 .hover-scale {
   transition: transform 0.3s ease;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .hover-scale:hover {
-  transform: scale(1.05);
+  transform: scale(1.03) translateZ(0);
 }
 
 /* Smooth Transitions */
@@ -123,5 +135,54 @@
 
 .transition-slow {
   transition: all 0.5s ease;
+}
+
+/* Prefers Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-pulse-slow,
+  .animate-slide-in-right,
+  .animate-slide-in-left,
+  .animate-fade-in,
+  .animate-scale-in,
+  .animate-rotate,
+  .hover-lift,
+  .hover-scale,
+  .transition-all,
+  .transition-slow {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Mobilní optimalizace - vypnout těžké animace */
+@media (max-width: 768px) {
+  .animate-float {
+    animation: none !important;
+  }
+
+  .animate-pulse-slow {
+    animation: none !important;
+  }
+
+  .animate-rotate {
+    animation: none !important;
+  }
+
+  /* Zjednodušit hover efekty */
+  .hover-lift:hover {
+    transform: translateY(-4px) translateZ(0) !important;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08) !important;
+  }
+
+  .hover-scale:hover {
+    transform: scale(1.01) translateZ(0) !important;
+  }
+
+  /* Snížit transition doby */
+  .transition-all,
+  .transition-slow {
+    transition-duration: 0.15s !important;
+  }
 }
 

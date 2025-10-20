@@ -24,11 +24,44 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  background-attachment: fixed;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  
+  /* Custom barvy pro hero sekci */
+  .text-hero-dark-blue { color: #0B1D36 !important; }
+  .bg-hero-dark-blue { background-color: #0B1D36 !important; }
+  .border-hero-dark-blue { border-color: #0B1D36 !important; }
+  
+  .text-hero-dark-gray { color: #1F2D42 !important; }
+  .bg-hero-dark-gray { background-color: #1F2D42 !important; }
+  .border-hero-dark-gray { border-color: #1F2D42 !important; }
+  
+  .text-hero-yellow { color: #FFC52E !important; }
+  .bg-hero-yellow { background-color: #FFC52E !important; }
+  .border-hero-yellow { border-color: #FFC52E !important; }
+  
+  .text-hero-white { color: #FFFFFF !important; }
+  .bg-hero-white { background-color: #FFFFFF !important; }
+  .border-hero-white { border-color: #FFFFFF !important; }
+
+  /* Header logo fix */
+  .header-logo {
+    height: 64px !important;
+    width: auto !important;
+    display: block !important;
+    margin: 0 auto !important;
+  }
+
+  /* GPU acceleration */
+  .gpu-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
   }
 }
 
@@ -36,14 +69,63 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Prefers Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Mobilní optimalizace */
+@media (max-width: 768px) {
+  /* Vypnout animace na mobilu pro lepší výkon */
+  .animate-float,
+  .animate-pulse-slow,
+  .animate-scale-in {
+    animation: none !important;
+  }
+  
+  /* Optimalizovat gradienty na mobilu */
+  .gradient-text {
+    background: linear-gradient(to right, #0B1D36 0%, #FFC52E 100%);
+  }
+  
+  /* Vypnout blur efekty na mobilu */
+  .backdrop-blur,
+  .backdrop-blur-3xl,
+  .backdrop-blur-md {
+    backdrop-filter: none !important;
+  }
+  
+  /* Snížit shadow hloubku */
+  .shadow-2xl,
+  .shadow-xl,
+  .shadow-lg {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+  }
+  
+  /* Zmenšit grid pattern na mobilu */
+  .grid-pattern,
+  .grid-pattern-large,
+  .grid-pattern-dots {
+    background-size: 80px 80px;
+  }
+}
+
+/* Zjednodušený gradient text */
 .gradient-text {
-  background: linear-gradient(135deg, #3b82f6 0%, #f59e0b 100%);
+  background: linear-gradient(135deg, #0B1D36 0%, #FFC52E 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Animace pro elektrické kabely */
+/* Optimalizované animace */
 @keyframes slideDown {
   from {
     height: 0;
@@ -77,30 +159,19 @@ html {
   }
 }
 
-@keyframes gradient {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-.animate-gradient {
-  animation: gradient 3s ease infinite;
-}
-
-/* Grid Patterns */
+/* Grid Patterns - s performance optimizacemi */
 .grid-pattern {
   background-image: 
     linear-gradient(to right, rgba(0,0,0,0.1) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(0,0,0,0.1) 1px, transparent 1px);
   background-size: 40px 40px;
+  background-attachment: fixed;
 }
 
 .grid-pattern-dots {
   background-image: radial-gradient(circle, rgba(0,0,0,0.15) 1px, transparent 1px);
   background-size: 30px 30px;
+  background-attachment: fixed;
 }
 
 .grid-pattern-large {
@@ -108,12 +179,14 @@ html {
     linear-gradient(to right, rgba(0,0,0,0.08) 2px, transparent 2px),
     linear-gradient(to bottom, rgba(0,0,0,0.08) 2px, transparent 2px);
   background-size: 80px 80px;
+  background-attachment: fixed;
 }
 
 /* Gradient pozadí s mřížkou */
 .hero-grid-bg {
   background: linear-gradient(to bottom right, #ffffff 0%, #f3f4f6 50%, #111827 100%);
   position: relative;
+  background-attachment: fixed;
 }
 
 .hero-grid-bg::before {
@@ -125,5 +198,6 @@ html {
     linear-gradient(to bottom, rgba(0,0,0,0.1) 1px, transparent 1px);
   background-size: 40px 40px;
   opacity: 0.3;
+  pointer-events: none;
 }
 

@@ -1,11 +1,26 @@
 'use client'
 
+import dynamic from 'next/dynamic'
 import Header from '@/components/Header'
 import Hero from '@/components/Hero'
 import Services from '@/components/Services'
-import About from '@/components/About'
-import References from '@/components/References'
-import Footer from '@/components/Footer'
+
+// Lazy load těžké komponenty
+const About = dynamic(() => import('@/components/About'), {
+  loading: () => <div className="h-screen" />,
+  ssr: true,
+})
+
+// References s lazy loading specificky pro mobil
+const References = dynamic(() => import('@/components/References'), {
+  loading: () => <div className="h-96" />,
+  ssr: true,
+})
+
+const Footer = dynamic(() => import('@/components/Footer'), {
+  loading: () => <div className="h-64" />,
+  ssr: true,
+})
 
 export default function Home() {
   return (
@@ -20,7 +35,8 @@ export default function Home() {
               linear-gradient(to right, rgba(255,255,255,0.3) 1px, transparent 1px),
               linear-gradient(to bottom, rgba(255,255,255,0.3) 1px, transparent 1px)
             `,
-            backgroundSize: '40px 40px'
+            backgroundSize: '40px 40px',
+            backgroundAttachment: 'fixed'
           }}
         />
       </div>

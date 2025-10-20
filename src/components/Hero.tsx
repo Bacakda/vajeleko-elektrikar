@@ -1,169 +1,114 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import { BoltIcon, PhoneIcon, ClockIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 
 export default function Hero() {
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-12 lg:pt-20">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Mobile Image - zobrazuje se nahoře na mobilu */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="flex lg:hidden items-center justify-center relative order-first"
-          >
-            <div className="relative w-full max-w-md">
-              {/* Obrázek rozvaděče */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.5, duration: 0.8 }}
-                className="relative z-10 w-full flex items-center justify-center"
+    <section id="home" className="relative min-h-screen flex items-center justify-center py-8 sm:py-12 lg:py-20 overflow-hidden">
+      {/* Pozadí - plnohodnotný obrázek elektroinstalace */}
+      <div className="absolute inset-0">
+        <Image
+          src="/images/services/el-obv.avif"
+          alt="Profesionální elektroinstalace - obvod"
+          fill
+          className="object-cover w-full h-full"
+          priority
+          sizes="100vw"
+        />
+        {/* Tmavý overlay pro lepší čitelnost textu */}
+        <div className="absolute inset-0 bg-black/40"></div>
+      </div>
+
+      {/* Logo overlay v pravém dolním rohu */}
+      <div className="absolute bottom-4 sm:bottom-8 right-4 sm:right-8 z-20">
+        <Image
+          src="/images/logos/logo-hero.webp"
+          alt="VaJeLekO Logo"
+          width={300}
+          height={200}
+          className="object-contain drop-shadow-2xl max-w-[200px] sm:max-w-none"
+          priority
+        />
+      </div>
+
+      {/* Obsah - text a tlačítka overlay na obrázku */}
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="max-w-4xl mx-auto">
+          {/* Badge */}
+          <div className="inline-flex items-center px-3 py-1.5 sm:px-4 sm:py-2 bg-hero-dark-gray/95 backdrop-blur-md text-hero-white text-xs sm:text-sm font-semibold rounded-full mb-4 sm:mb-6 shadow-lg border border-hero-white/20">
+            <BoltIcon className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-hero-yellow" />
+            Profesionální elektroinstalace
+          </div>
+          
+          {/* Hlavní nadpis */}
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-hero-white mb-4 sm:mb-6 leading-tight drop-shadow-2xl">
+            Kompletní řešení pro{' '}
+            <span className="text-hero-yellow">vaši elektroinstalaci</span>
+          </h1>
+          
+          {/* Popis */}
+          <p className="text-base sm:text-lg md:text-xl text-hero-white/90 mb-6 sm:mb-8 max-w-3xl mx-auto drop-shadow-lg">
+            Poskytujeme profesionální elektroinstalační služby, revize, zabezpečení a 24/7 pohotovost po celé České republice. 
+            Spolehlivost, kvalita a rychlost – to jsou naše priority.
+          </p>
+          
+          {/* Tlačítka */}
+          <div className="space-y-3 sm:space-y-4 max-w-md mx-auto lg:max-w-lg">
+            {/* Hlavní tlačítka */}
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+              <a
+                href="/kontakt"
+                className="group px-6 py-3 sm:px-8 sm:py-4 bg-hero-dark-blue hover:bg-hero-dark-gray text-hero-white font-bold rounded-lg shadow-xl transition-all duration-300 flex items-center justify-center flex-1 relative overflow-hidden text-sm sm:text-base"
               >
-                <Image
-                  src="/images/services/rozvadec.webp"
-                  alt="Elektrický rozvaděč"
-                  width={2000}
-                  height={1500}
-                  className="object-contain w-full h-auto max-h-64"
-                />
-              </motion.div>
-            </div>
-          </motion.div>
-
-          {/* Left Content */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center lg:text-left relative z-20 -mt-16 lg:mt-0"
-          >
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="hidden lg:inline-flex items-center px-4 py-2 bg-blue-100 rounded-full mb-6"
-            >
-              <BoltIcon className="w-5 h-5 text-blue-600 mr-2" />
-              <span className="text-blue-700 font-semibold">Profesionální služby</span>
-            </motion.div>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight"
-            >
-              Profesionální{' '}
-              <span className="gradient-text">elektroinstalace</span>
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="text-xl md:text-2xl text-gray-600 mb-8"
-            >
-              a zabezpečení – po celé České republice
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="space-y-4"
-            >
-              {/* První řádek - Nezávazná poptávka + první telefon - telefony jen na desktopu */}
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
-                <a
-                  href="/kontakt"
-                  className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-electric-500 text-white rounded-full font-bold text-base sm:text-lg shadow-2xl hover:shadow-electric-500/50 transition-all hover:scale-105"
-                >
-                  Nezávazná poptávka
-                </a>
-                <a
-                  href="tel:+420722914120"
-                  className="hidden lg:flex px-6 sm:px-8 py-3 sm:py-4 bg-white border-2 border-blue-600 text-blue-600 rounded-full font-bold text-base sm:text-lg hover:bg-blue-50 transition-all hover:scale-105 items-center justify-center"
-                >
-                  <PhoneIcon className="w-5 h-5 sm:w-6 sm:h-6 mr-2" />
-                  +420 722 914 120
-                </a>
-              </div>
-
-              {/* Druhý řádek - 24/7 pohotovost + druhý telefon - telefony jen na desktopu */}
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
-                <div className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-electric-500 to-electric-600 text-white rounded-full font-bold text-base sm:text-lg shadow-2xl flex items-center justify-center">
-                  <ClockIcon className="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-3" />
-                  24/7 Elektro pohotovost
-                </div>
-                <a
-                  href="tel:+420605999878"
-                  className="hidden lg:flex px-6 sm:px-8 py-3 sm:py-4 bg-white border-2 border-electric-500 text-electric-600 rounded-full font-bold text-base sm:text-lg hover:bg-electric-50 transition-all hover:scale-105 items-center justify-center"
-                >
-                  <PhoneIcon className="w-5 h-5 sm:w-6 sm:h-6 mr-2" />
+                <PhoneIcon className="w-4 h-4 sm:w-5 sm:h-5 mr-2 group-hover:text-gray-900 transition-colors duration-300" />
+                <span className="relative group-hover:text-gray-900 transition-colors duration-300">
                   +420 605 999 878
-                </a>
-              </div>
-            </motion.div>
-
-          </motion.div>
-
-                 {/* Right Content - Decorative - pouze desktop */}
-                 <motion.div
-                   initial={{ opacity: 0, x: 50 }}
-                   animate={{ opacity: 1, x: 0 }}
-                   transition={{ duration: 0.8 }}
-                   className="hidden lg:flex items-center justify-center relative"
-                 >
-                   <div className="relative w-full max-w-4xl">
-                     {/* Obrázek rozvaděče */}
-                     <motion.div
-                       initial={{ opacity: 0, scale: 0.8 }}
-                       animate={{ opacity: 1, scale: 1 }}
-                       transition={{ delay: 0.5, duration: 0.8 }}
-                       className="relative z-10 w-full flex items-center justify-center"
-                     >
-                       <Image
-                         src="/images/services/rozvadec.webp"
-                         alt="Elektrický rozvaděč"
-                         width={2000}
-                         height={1500}
-                         className="object-contain"
-                       />
-                     </motion.div>
-                   </div>
-                 </motion.div>
+                </span>
+                {/* Hover overlay efekt */}
+                <div className="absolute inset-0 bg-hero-white opacity-0 group-hover:opacity-90 transition-opacity duration-300 rounded-lg -z-10"></div>
+              </a>
+              <a
+                href="tel:+420722914120"
+                className="group px-6 py-3 sm:px-8 sm:py-4 border-2 border-hero-white text-hero-white font-bold rounded-lg hover:bg-hero-white/90 transition-all duration-300 flex items-center justify-center flex-1 relative overflow-hidden text-sm sm:text-base"
+              >
+                <PhoneIcon className="w-4 h-4 sm:w-5 sm:h-5 mr-2 group-hover:text-gray-900 transition-colors duration-300" />
+                <span className="relative group-hover:text-gray-900 transition-colors duration-300">
+                  +420 722 914 120
+                </span>
+                {/* Hover overlay efekt */}
+                <div className="absolute inset-0 bg-hero-white opacity-0 group-hover:opacity-90 transition-opacity duration-300 rounded-lg -z-10"></div>
+              </a>
+            </div>
+            
+            {/* Pohotovost */}
+            <div className="flex items-center justify-center gap-2 sm:gap-3 bg-hero-dark-gray/20 backdrop-blur-md rounded-lg px-4 sm:px-6 py-2 sm:py-3 border border-hero-white/20">
+              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-hero-yellow rounded-full"></div>
+              <ClockIcon className="w-4 h-4 sm:w-5 sm:h-5 text-hero-yellow" />
+              <span className="text-hero-white font-medium text-sm sm:text-base">24/7 Pohotovost</span>
+            </div>
+          </div>
+          
+          {/* Statistiky */}
+          <div className="mt-8 sm:mt-12 flex flex-wrap justify-center gap-4 sm:gap-6">
+            <div className="text-hero-white text-center min-w-[60px]">
+              <div className="text-2xl sm:text-3xl font-bold text-hero-yellow mb-1">ČR</div>
+              <div className="text-xs sm:text-sm opacity-90">Celá republika</div>
+            </div>
+            <div className="text-hero-white text-center min-w-[60px]">
+              <div className="text-2xl sm:text-3xl font-bold text-hero-yellow mb-1">8+</div>
+              <div className="text-xs sm:text-sm opacity-90">Služeb</div>
+            </div>
+            <div className="text-hero-white text-center min-w-[60px]">
+              <div className="text-2xl sm:text-3xl font-bold text-hero-yellow mb-1">24/7</div>
+              <div className="text-xs sm:text-sm opacity-90">Pohotovost</div>
+            </div>
+            <div className="text-hero-white text-center min-w-[60px]">
+              <div className="text-2xl sm:text-3xl font-bold text-hero-yellow mb-1">15+</div>
+              <div className="text-xs sm:text-sm opacity-90">Let zkušeností</div>
+            </div>
+          </div>
         </div>
-
-        {/* Features */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7, duration: 0.8 }}
-          className="mt-12 lg:mt-16 grid grid-cols-4 gap-2 sm:gap-3 lg:gap-8"
-        >
-          {[
-            { number: 'ČR', label: 'Celá republika' },
-            { number: '8', label: 'Hlavních služeb' },
-            { number: '24/7', label: 'Pohotovost' },
-            { number: '3', label: 'Ověření partneři' },
-          ].map((stat, index) => (
-            <motion.div
-              key={index}
-              whileHover={{ scale: 1.05 }}
-              className="text-center p-2 sm:p-4 lg:p-6 bg-white/90 backdrop-blur-md rounded-2xl shadow-xl border border-gray-200"
-            >
-              <div className="text-2xl sm:text-3xl lg:text-4xl font-bold gradient-text mb-1 sm:mb-2">
-                {stat.number}
-              </div>
-              <div className="text-gray-600 text-xs sm:text-sm lg:text-base leading-tight">{stat.label}</div>
-            </motion.div>
-          ))}
-        </motion.div>
       </div>
     </section>
   )

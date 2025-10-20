@@ -1,52 +1,60 @@
-import { useCallback, useEffect, useMemo, useRef, useState, memo } from 'react';
-import Image from 'next/image';
-import './LogoLoop.css';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-interface LogoItem {
-  src: string
-  alt: string
-  title?: string
-  href?: string
-  srcSet?: string
-  sizes?: string
-  width?: number
-  height?: number
-}
+export type LogoItem =
+  | {
+      node: React.ReactNode;
+      href?: string;
+      title?: string;
+      ariaLabel?: string;
+    }
+  | {
+      src: string;
+      alt?: string;
+      href?: string;
+      title?: string;
+      srcSet?: string;
+      sizes?: string;
+      width?: number;
+      height?: number;
+    };
 
-interface NodeItem {
-  node: React.ReactNode
-  title?: string
-  href?: string
-  ariaLabel?: string
-}
-
-type LogoLoopItem = LogoItem | NodeItem
-
-interface LogoLoopProps {
-  logos: LogoLoopItem[]
-  speed?: number
-  direction?: 'left' | 'right'
-  width?: string | number
-  logoHeight?: number
-  gap?: number
-  pauseOnHover?: boolean
-  fadeOut?: boolean
-  fadeOutColor?: string
-  scaleOnHover?: boolean
-  ariaLabel?: string
-  className?: string
-  style?: React.CSSProperties
+export interface LogoLoopProps {
+  logos: LogoItem[];
+  speed?: number;
+  direction?: 'left' | 'right';
+  width?: number | string;
+  logoHeight?: number;
+  gap?: number;
+  pauseOnHover?: boolean;
+  fadeOut?: boolean;
+  fadeOutColor?: string;
+  scaleOnHover?: boolean;
+  ariaLabel?: string;
+  className?: string;
+  style?: React.CSSProperties;
 }
 
 const ANIMATION_CONFIG = {
   SMOOTH_TAU: 0.25,
   MIN_COPIES: 2,
   COPY_HEADROOM: 2
-};
+} as const;
 
-const toCssLength = (value: string | number | undefined) => (typeof value === 'number' ? `${value}px` : (value ?? undefined));
+const toCssLength = (value?: number | string): string | undefined =>
+  typeof value === 'number' ? `${value}px` : (value ?? undefined);
 
-const useResizeObserver = (callback: () => void, elements: React.RefObject<HTMLElement>[], dependencies: unknown[]) => {
+const cx = (...parts: Array<string | false | null | undefined>) => parts.filter(Boolean).join(' ');
+
+// Helper funkce pro bezpečný přístup k vlastnostem LogoItem
+const getNodeItem = (item: LogoItem) => item as Extract<LogoItem, { node: React.ReactNode }>;
+const getImageItem = (item: LogoItem) => item as Extract<LogoItem, { src: string }>;
+const isNodeItem = (item: LogoItem): item is Extract<LogoItem, { node: React.ReactNode }> => 'node' in item;
+
+const useResizeObserver = (
+  callback: () => void,
+  elements: Array<React.RefObject<Element | null>>,
+  dependencies: React.DependencyList
+) => {
   useEffect(() => {
     if (!window.ResizeObserver) {
       const handleResize = () => callback();
@@ -67,11 +75,14 @@ const useResizeObserver = (callback: () => void, elements: React.RefObject<HTMLE
     return () => {
       observers.forEach(observer => observer?.disconnect());
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, dependencies);
 };
 
-const useImageLoader = (seqRef: React.RefObject<HTMLElement>, onLoad: () => void, dependencies: unknown[]) => {
+const useImageLoader = (
+  seqRef: React.RefObject<HTMLUListElement | null>,
+  onLoad: () => void,
+  dependencies: React.DependencyList
+) => {
   useEffect(() => {
     const images = seqRef.current?.querySelectorAll('img') ?? [];
 
@@ -88,7 +99,7 @@ const useImageLoader = (seqRef: React.RefObject<HTMLElement>, onLoad: () => void
       }
     };
 
-    images.forEach((img) => {
+    images.forEach(img => {
       const htmlImg = img as HTMLImageElement;
       if (htmlImg.complete) {
         handleImageLoad();
@@ -99,17 +110,21 @@ const useImageLoader = (seqRef: React.RefObject<HTMLElement>, onLoad: () => void
     });
 
     return () => {
-      images.forEach((img) => {
-        const htmlImg = img as HTMLImageElement;
-        htmlImg.removeEventListener('load', handleImageLoad);
-        htmlImg.removeEventListener('error', handleImageLoad);
+      images.forEach(img => {
+        img.removeEventListener('load', handleImageLoad);
+        img.removeEventListener('error', handleImageLoad);
       });
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, dependencies);
 };
 
-const useAnimationLoop = (trackRef: React.RefObject<HTMLElement>, targetVelocity: number, seqWidth: number, isHovered: boolean, pauseOnHover: boolean) => {
+const useAnimationLoop = (
+  trackRef: React.RefObject<HTMLDivElement | null>,
+  targetVelocity: number,
+  seqWidth: number,
+  isHovered: boolean,
+  pauseOnHover: boolean
+) => {
   const rafRef = useRef<number | null>(null);
   const lastTimestampRef = useRef<number | null>(null);
   const offsetRef = useRef(0);
@@ -119,9 +134,21 @@ const useAnimationLoop = (trackRef: React.RefObject<HTMLElement>, targetVelocity
     const track = trackRef.current;
     if (!track) return;
 
+    const prefersReduced =
+      typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     if (seqWidth > 0) {
       offsetRef.current = ((offsetRef.current % seqWidth) + seqWidth) % seqWidth;
       track.style.transform = `translate3d(${-offsetRef.current}px, 0, 0)`;
+    }
+
+    if (prefersReduced) {
+      track.style.transform = 'translate3d(0, 0, 0)';
+      return () => {
+        lastTimestampRef.current = null;
+      };
     }
 
     const animate = (timestamp: number) => {
@@ -158,10 +185,10 @@ const useAnimationLoop = (trackRef: React.RefObject<HTMLElement>, targetVelocity
       }
       lastTimestampRef.current = null;
     };
-  }, [targetVelocity, seqWidth, isHovered, pauseOnHover, trackRef]);
+  }, [targetVelocity, seqWidth, isHovered, pauseOnHover]);
 };
 
-export const LogoLoop = memo(
+export const LogoLoop = React.memo<LogoLoopProps>(
   ({
     logos,
     speed = 120,
@@ -170,20 +197,33 @@ export const LogoLoop = memo(
     logoHeight = 28,
     gap = 32,
     pauseOnHover = true,
-    fadeOut = false,
     fadeOutColor,
     scaleOnHover = false,
     ariaLabel = 'Partner logos',
     className,
     style
-  }: LogoLoopProps) => {
-    const containerRef = useRef(null);
-    const trackRef = useRef(null);
-    const seqRef = useRef(null);
+  }) => {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const trackRef = useRef<HTMLDivElement>(null);
+    const seqRef = useRef<HTMLUListElement>(null);
 
-    const [seqWidth, setSeqWidth] = useState(0);
-    const [copyCount, setCopyCount] = useState(ANIMATION_CONFIG.MIN_COPIES);
-    const [isHovered, setIsHovered] = useState(false);
+    const [seqWidth, setSeqWidth] = useState<number>(0);
+    const [copyCount, setCopyCount] = useState<number>(ANIMATION_CONFIG.MIN_COPIES);
+    const [isHovered, setIsHovered] = useState<boolean>(false);
+
+    // Detekce mobilního zařízení - hover efekty se neaplikují na touch zařízeních
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+      const checkMobile = () => {
+        const mobileCheck = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        setIsMobile(mobileCheck);
+      };
+
+      checkMobile();
+      window.addEventListener('resize', checkMobile);
+      return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     const targetVelocity = useMemo(() => {
       const magnitude = Math.abs(speed);
@@ -193,8 +233,8 @@ export const LogoLoop = memo(
     }, [speed, direction]);
 
     const updateDimensions = useCallback(() => {
-      const containerWidth = (containerRef.current as HTMLElement | null)?.clientWidth ?? 0;
-      const sequenceWidth = (seqRef.current as HTMLElement | null)?.getBoundingClientRect?.()?.width ?? 0;
+      const containerWidth = containerRef.current?.clientWidth ?? 0;
+      const sequenceWidth = seqRef.current?.getBoundingClientRect?.()?.width ?? 0;
 
       if (sequenceWidth > 0) {
         setSeqWidth(Math.ceil(sequenceWidth));
@@ -207,91 +247,164 @@ export const LogoLoop = memo(
 
     useImageLoader(seqRef, updateDimensions, [logos, gap, logoHeight]);
 
-    useAnimationLoop(trackRef, targetVelocity, seqWidth, isHovered, pauseOnHover);
+    // Pause efekt pouze na desktopu (ne na mobilu)
+    const effectivePauseOnHover = pauseOnHover && !isMobile;
+    useAnimationLoop(trackRef, targetVelocity, seqWidth, isHovered, effectivePauseOnHover);
 
     const cssVariables = useMemo(
-      () => ({
-        '--logoloop-gap': `${gap}px`,
-        '--logoloop-logoHeight': `${logoHeight}px`,
-        ...(fadeOutColor && { '--logoloop-fadeColor': fadeOutColor })
-      }),
+      () =>
+        ({
+          '--logoloop-gap': `${gap}px`,
+          '--logoloop-logoHeight': `${logoHeight}px`,
+          ...(fadeOutColor && { '--logoloop-fadeColor': fadeOutColor })
+        }) as React.CSSProperties,
       [gap, logoHeight, fadeOutColor]
     );
 
-    const rootClassName = useMemo(
+    const rootClasses = useMemo(
       () =>
-        ['logoloop', fadeOut && 'logoloop--fade', scaleOnHover && 'logoloop--scale-hover', className]
-          .filter(Boolean)
-          .join(' '),
-      [fadeOut, scaleOnHover, className]
+        cx(
+          'relative overflow-x-hidden group',
+          '[--logoloop-gap:32px]',
+          '[--logoloop-logoHeight:28px]',
+          '[--logoloop-fadeColorAuto:#ffffff]',
+          'dark:[--logoloop-fadeColorAuto:#0b0b0b]',
+          scaleOnHover && !isMobile && 'py-[calc(var(--logoloop-logoHeight)*0.1)]', // Scale pouze na desktopu
+          className
+        ),
+      [scaleOnHover, className, isMobile]
     );
 
     const handleMouseEnter = useCallback(() => {
-      if (pauseOnHover) setIsHovered(true);
-    }, [pauseOnHover]);
+      // Hover efekt pouze na desktopu (ne na mobilu)
+      if (pauseOnHover && !isMobile) setIsHovered(true);
+    }, [pauseOnHover, isMobile]);
 
     const handleMouseLeave = useCallback(() => {
-      if (pauseOnHover) setIsHovered(false);
-    }, [pauseOnHover]);
+      // Hover efekt pouze na desktopu (ne na mobilu)
+      if (pauseOnHover && !isMobile) setIsHovered(false);
+    }, [pauseOnHover, isMobile]);
 
-    const renderLogoItem = useCallback((item: LogoLoopItem, key: string) => {
-      const isNodeItem = 'node' in item;
+    // Touch event handlers pro mobil - neudržuj hover stav
+    const handleTouchStart = useCallback(() => {
+      // Na mobilu neudržuj hover stav - umožni normální kliknutí
+    }, []);
 
-      const content = isNodeItem ? (
-        <span className="logoloop__node" aria-hidden={!!item.href && !item.ariaLabel}>
-          {item.node}
-        </span>
-      ) : (
-        <Image
-          src={(item as LogoItem).src}
-          alt={(item as LogoItem).alt ?? ''}
-          title={(item as LogoItem).title}
-          width={(item as LogoItem).width || logoHeight}
-          height={(item as LogoItem).height || logoHeight}
-          className="logoloop-image"
-          draggable={false}
-        />
-      );
+    const handleTouchEnd = useCallback(() => {
+      // Na mobilu okamžitě uvolni hover stav
+      if (pauseOnHover && !isMobile) setIsHovered(false);
+    }, [pauseOnHover, isMobile]);
 
-      const itemAriaLabel = isNodeItem ? (item.ariaLabel ?? item.title) : (item.alt ?? item.title);
+    const renderLogoItem = useCallback(
+      (item: LogoItem, key: React.Key) => {
+        const itemIsNode = isNodeItem(item);
 
-      const itemContent = item.href ? (
-        <a
-          className="logoloop__link"
-          href={item.href}
-          aria-label={itemAriaLabel || 'logo link'}
-        >
-          {content}
-        </a>
-      ) : (
-        content
-      );
+        const content = itemIsNode ? (
+          <span
+            className={cx(
+              'inline-flex items-center',
+              'motion-reduce:transition-none',
+              'transition-all duration-300 ease-in-out',
+              // Hover efekt pouze na desktopu
+              scaleOnHover && !isMobile &&
+                'hover:scale-115 group-hover/item:scale-115'
+            )}
+            aria-hidden={!!(getNodeItem(item).href) && !(getNodeItem(item).ariaLabel)}
+          >
+            {getNodeItem(item).node}
+          </span>
+        ) : (
+          <img
+            className={cx(
+              'h-[var(--logoloop-logoHeight)] w-auto block object-contain',
+              '[-webkit-user-drag:none] pointer-events-none',
+              '[image-rendering:-webkit-optimize-contrast]',
+              'motion-reduce:transition-none',
+              'transition-all duration-300 ease-in-out',
+              // Normální stav: bílá barva
+              'brightness-0 invert',
+              // Hover stav: originální barvy + jemný scale (pouze na desktopu)
+              scaleOnHover && !isMobile &&
+                'group-hover/item:brightness-100 group-hover/item:invert-0 group-hover/item:scale-115'
+            )}
+            src={getImageItem(item).src}
+            srcSet={getImageItem(item).srcSet}
+            sizes={getImageItem(item).sizes ?? '(max-width: 768px) 80px, 120px'}
+            width={getImageItem(item).width}
+            height={getImageItem(item).height}
+            alt={getImageItem(item).alt ?? ''}
+            title={getImageItem(item).title}
+            loading="lazy"
+            decoding="async"
+            draggable={false}
+          />
+        );
 
-      return (
-        <li className="logoloop__item" key={key} role="listitem">
-          {itemContent}
-        </li>
-      );
-    }, [logoHeight]);
+        const itemAriaLabel = itemIsNode
+          ? (getNodeItem(item).ariaLabel ?? getNodeItem(item).title)
+          : (getImageItem(item).alt ?? getImageItem(item).title);
+
+        const itemHref = itemIsNode ? getNodeItem(item).href : getImageItem(item).href;
+
+        const inner = itemHref ? (
+          <a
+            className={cx(
+              'inline-flex items-center no-underline rounded',
+              'transition-all duration-300 ease-in-out',
+              // Hover opacity efekt pouze na desktopu
+              !isMobile && 'hover:opacity-90',
+              'focus-visible:outline focus-visible:outline-current focus-visible:outline-offset-2'
+            )}
+            href={itemHref}
+            aria-label={itemAriaLabel || 'logo link'}
+            // Interní odkazy (začínající na "/") se otevírají ve stejném okně
+            target={itemHref?.startsWith('/') ? '_self' : '_blank'}
+            rel={itemHref?.startsWith('http') ? 'noreferrer noopener' : undefined}
+            // Touch events pro mobil - zabrání hover efektům
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
+            {content}
+          </a>
+        ) : (
+          content
+        );
+
+        return (
+          <li
+            className={cx(
+              'flex-none mr-[var(--logoloop-gap)] text-[length:var(--logoloop-logoHeight)] leading-[1]',
+              // Scale efekt pouze na desktopu
+              scaleOnHover && !isMobile && 'overflow-visible group/item'
+            )}
+            key={key}
+            role="listitem"
+          >
+            {inner}
+          </li>
+        );
+      },
+      [scaleOnHover, isMobile, handleTouchStart, handleTouchEnd]
+    );
 
     const logoLists = useMemo(
       () =>
         Array.from({ length: copyCount }, (_, copyIndex) => (
           <ul
-            className="logoloop__list"
+            className="flex items-center"
             key={`copy-${copyIndex}`}
             role="list"
             aria-hidden={copyIndex > 0}
             ref={copyIndex === 0 ? seqRef : undefined}
           >
-            {logos.map((item: LogoLoopItem, itemIndex: number) => renderLogoItem(item, `${copyIndex}-${itemIndex}`))}
+            {logos.map((item, itemIndex) => renderLogoItem(item, `${copyIndex}-${itemIndex}`))}
           </ul>
         )),
       [copyCount, logos, renderLogoItem]
     );
 
     const containerStyle = useMemo(
-      () => ({
+      (): React.CSSProperties => ({
         width: toCssLength(width) ?? '100%',
         ...cssVariables,
         ...style
@@ -302,14 +415,19 @@ export const LogoLoop = memo(
     return (
       <div
         ref={containerRef}
-        className={rootClassName}
+        className={rootClasses}
         style={containerStyle}
         role="region"
         aria-label={ariaLabel}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
+        // Hover event handlers pouze na desktopu
+        onMouseEnter={!isMobile ? handleMouseEnter : undefined}
+        onMouseLeave={!isMobile ? handleMouseLeave : undefined}
       >
-        <div className="logoloop__track" ref={trackRef}>
+        {/* FadeOut efekty (stíny ze stran) úplně odstraněny */}
+        <div
+          className={cx('flex w-max will-change-transform select-none', 'motion-reduce:transform-none')}
+          ref={trackRef}
+        >
           {logoLists}
         </div>
       </div>

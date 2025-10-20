@@ -74,7 +74,7 @@ export default function PartnersPage() {
 
       <Header />
 
-      {/* Hero Section */}
+      {/* Hero Section - původní velikost na desktopu, menší na mobilu */}
       <section className="pt-32 pb-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -93,7 +93,7 @@ export default function PartnersPage() {
         </div>
       </section>
 
-      {/* Partners Section */}
+      {/* Partners Section - zvětšená loga na desktopu */}
       <section className="py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-16">
@@ -108,14 +108,14 @@ export default function PartnersPage() {
                 className="bg-white rounded-3xl shadow-xl border border-gray-200 overflow-hidden"
               >
                 <div className="grid lg:grid-cols-3 gap-8 p-8 lg:p-12">
-                  {/* Logo vlevo */}
+                  {/* Logo vlevo - zvětšené na desktopu */}
                   <div className="lg:col-span-1 flex items-center justify-center">
-                    <div className="relative w-80 h-80 flex items-center justify-center p-10">
+                    <div className="relative w-48 h-48 lg:w-96 lg:h-96 flex items-center justify-center p-4 lg:p-10">
                       <Image
                         src={partner.logo}
                         alt={partner.name}
                         fill
-                        className="object-contain p-8"
+                        className="object-contain p-4 lg:p-8"
                       />
                     </div>
                   </div>
@@ -140,7 +140,7 @@ export default function PartnersPage() {
         </div>
       </section>
 
-      {/* Call to Action */}
+      {/* Call to Action - původní velikost na desktopu */}
       <section className="py-20 bg-gradient-to-r from-blue-600 to-electric-500 text-white text-center">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.h2
