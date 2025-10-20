@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Bars3Icon, XMarkIcon, PhoneIcon, EnvelopeIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, XMarkIcon, PhoneIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import Image from 'next/image'
@@ -47,17 +47,17 @@ export default function Header() {
 
   return (
     <>
-      {/* BLUR OVERLAY NA CELU STRÁNKU */}
+      {/* BLUR OVERLAY NA CELU STRÁNKU - pod closing overlay, aby mohl closing overlay zachytit klik */}
       {isMobileScreen && mobileMenuOpen && (
         <div 
-          className="fixed inset-0 bg-black/10 backdrop-blur-sm z-40 pointer-events-none"
+          className="fixed inset-0 bg-black/5 backdrop-blur-sm z-40 pointer-events-none"
         />
       )}
       
-      {/* OVERLAY PRO ZAVŘENÍ */}
+      {/* OVERLAY PRO ZAVŘENÍ - zachytí klik mimo menu */}
       {isMobileScreen && mobileMenuOpen && (
         <div 
-          className="fixed inset-0 bg-black/50 backdrop-blur-md z-50 cursor-default"
+          className="fixed inset-0 bg-black/0 z-45 cursor-default"
           onClick={() => setMobileMenuOpen(false)}
           style={{ touchAction: 'pan-y' }}
         />
@@ -65,8 +65,8 @@ export default function Header() {
       
       {/* HLAVNÍ HEADER - SCHOVÁVAT NA MOBILU PŘI OTEVŘENÉM MENU */}
       <header className={`
-        fixed top-0 left-0 right-0 z-40 transition-all duration-300 ease-in-out
-        ${isMobileScreen && mobileMenuOpen ? 'pointer-events-none' : ''}
+        fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out
+        ${isMobileScreen && mobileMenuOpen ? '-translate-y-full opacity-0' : ''}
         ${isScrolled 
           ? 'bg-white/95 backdrop-blur-md shadow-lg' 
           : 'bg-transparent'
@@ -98,78 +98,69 @@ export default function Header() {
                   href={link.href}
                   className={`
                     font-medium transition-colors py-2 px-3 rounded-md
-                    ${pathname === link.href 
-                      ? 'text-electric-500 border-b-2 border-electric-500' 
+                    ${isScrolled 
+                      ? 'text-gray-700 hover:text-gray-900 hover:bg-gray-100' 
                       : useWhiteText 
-                      ? 'text-white hover:text-electric-200' 
-                      : 'text-gray-700 hover:text-gray-900'
+                        ? 'text-white hover:text-yellow-300 hover:bg-black/10' 
+                        : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
                     }
                   `}
                 >
                   {link.name}
                 </Link>
               ))}
-              {/* Partneři link pro desktop */}
+              
+              {/* CTA Button */}
               <Link
-                href="/partneri"
+                href="/kontakt"
                 className={`
-                  font-medium transition-colors py-2 px-3 rounded-md
-                  ${pathname === '/partneri' 
-                    ? 'text-electric-500 border-b-2 border-electric-500' 
+                  px-6 py-2.5 font-semibold rounded-full transition-all
+                  ${isScrolled 
+                    ? 'bg-blue-600 text-white hover:bg-blue-700' 
                     : useWhiteText 
-                    ? 'text-white hover:text-electric-200' 
-                    : 'text-gray-700 hover:text-gray-900'
+                      ? 'bg-yellow-500 text-gray-900 hover:bg-yellow-400 border border-yellow-400' 
+                      : 'bg-blue-600 text-white hover:bg-blue-700'
                   }
                 `}
               >
-                Partneři
+                Kontakt
               </Link>
             </div>
 
-            {/* Mobilní menu tlačítko */}
-            <div className="flex lg:hidden">
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className={`
-                  p-2 rounded-full transition-colors ${
-                    useWhiteText 
-                      ? 'text-white hover:bg-white/10' 
-                      : 'text-gray-700 hover:bg-gray-100'
-                  }
-                `}
-              >
-                {mobileMenuOpen ? (
-                  <XMarkIcon className="w-6 h-6" />
-                ) : (
-                  <Bars3Icon className="w-6 h-6" />
-                )}
-              </button>
-            </div>
-
-            {/* Kontaktní tlačítko - vždy viditelné */}
-            <a
-              href="tel:+420722914120"
+            {/* Mobile menu button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className={`
-                hidden lg:flex items-center px-4 py-2 rounded-xl font-semibold transition-all
-                ${useWhiteText 
-                  ? 'bg-white text-electric-600 hover:bg-white/90 shadow-lg' 
-                  : 'bg-electric-500 text-white hover:bg-electric-600 shadow-lg'
+                lg:hidden p-2 rounded-md transition-all duration-300
+                ${isScrolled 
+                  ? 'text-gray-900 hover:bg-gray-100' 
+                  : useWhiteText 
+                    ? 'text-white hover:bg-black/10' 
+                    : 'text-gray-900 hover:bg-gray-100'
                 }
               `}
             >
-              <PhoneIcon className="w-5 h-5 mr-2" />
-              Zavolat
-            </a>
+              {mobileMenuOpen ? (
+                <XMarkIcon className="w-6 h-6" />
+              ) : (
+                <Bars3Icon className="w-6 h-6" />
+              )}
+            </button>
           </div>
         </nav>
       </header>
-
-      {/* MOBILNÍ SIDEBAR MENU - FIXED, Z-INDEX VYŠŠÍ NEŽ HEADER */}
-      {isMobileScreen && (
+      
+      {/* MOBILNÍ SIDEBAR - PLYNULÁ ANIMACE */}
+      <div
+        className={`
+          fixed inset-0 z-50 pointer-events-none lg:hidden
+          ${mobileMenuOpen ? 'pointer-events-auto' : ''}
+        `}
+      >
         <div 
           className={`
             fixed top-0 right-0 h-screen w-80 bg-white/95 backdrop-blur-xl border-l-2 border-gray-200 shadow-2xl
-            transform transition-all duration-300 ease-out rounded-l-3xl flex flex-col z-[60]
+            transform transition-all duration-300 ease-out rounded-l-3xl flex flex-col
             ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}
           `}
         >
@@ -210,38 +201,51 @@ export default function Header() {
           </nav>
           
           {/* Kontaktní sekce - dole - VŽDY tmavý text */}
-          <div className="p-6 border-t border-gray-200 flex-shrink-0">
+          <div className="p-6 border-t border-gray-200 flex-shrink-0 overflow-y-auto">
             <h3 className="text-xl font-bold mb-6 text-hero-dark-blue">Kontakty</h3>
             <div className="space-y-4 mb-8">
-              <a href="tel:+420722914120" className="flex items-center space-x-3 text-gray-700 hover:text-electric-500 transition-colors">
-                <PhoneIcon className="w-5 h-5" />
-                <span>+420 722 914 120</span>
+              <a 
+                href="tel:+420722914120" 
+                className="flex items-center space-x-4 py-4 px-6 rounded-xl hover:shadow-xl transition-all duration-200
+                   bg-gradient-to-r from-blue-50 to-blue-100 text-hero-dark-blue hover:from-blue-100 hover:to-blue-200
+                   font-semibold border-l-4 border-blue-500"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <PhoneIcon className="w-6 h-6 text-blue-600 flex-shrink-0" />
+                <span className="text-lg">+420 722 914 120</span>
               </a>
-              <a href="tel:+420605999878" className="flex items-center space-x-3 text-gray-700 hover:text-electric-500 transition-colors">
-                <PhoneIcon className="w-5 h-5" />
-                <span>+420 605 999 878</span>
+              <a 
+                href="tel:+420605999878" 
+                className="flex items-center space-x-4 py-4 px-6 rounded-xl hover:shadow-xl transition-all duration-200
+                   bg-gradient-to-r from-yellow-50 to-yellow-100 text-hero-dark-blue hover:from-yellow-100 hover:to-yellow-200
+                   font-semibold border-l-4 border-yellow-500"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <PhoneIcon className="w-6 h-6 text-yellow-600 flex-shrink-0" />
+                <span className="text-lg">+420 605 999 878</span>
               </a>
-              <a href="mailto:info@vajeleko.cz" className="flex items-center space-x-3 text-gray-700 hover:text-electric-500 transition-colors">
-                <EnvelopeIcon className="w-5 h-5" />
-                <span>info@vajeleko.cz</span>
-              </a>
+              <div className="flex items-center space-x-3 py-3 px-5 bg-red-50 rounded-xl border-l-4 border-red-500">
+                <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                <PhoneIcon className="w-5 h-5 text-red-600 flex-shrink-0" />
+                <span className="text-base font-semibold text-red-700">24/7 Pohotovost</span>
+              </div>
             </div>
-            <div className="border-t border-gray-200 pt-4">
-              <h4 className="font-semibold mb-2 text-gray-800">Pracovní doba</h4>
-              <p className="text-sm text-gray-600 mb-1">Po-Pá: 7:00 - 17:00</p>
-              <p className="text-sm text-electric-600 font-medium">24/7 Pohotovost</p>
-            </div>
+            
+            {/* CTA tlačítko - NOVÝ GRADIENT MODRÝ-ŽLUTÝ */}
+            <Link
+              href="/kontakt"
+              className={`
+                block w-full py-4 px-8 font-bold text-lg rounded-xl text-center transition-all duration-200 shadow-xl
+                bg-gradient-to-r from-[#0B1D36] to-[#FFC52E] text-white hover:shadow-2xl
+                hover:from-[#0B1D36]/90 hover:to-[#FFC52E]/90 transform hover:scale-[1.02]
+              `}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Nezávazná poptávka
+            </Link>
           </div>
         </div>
-      )}
-
-      {/* Hlavní obsah stránky */}
-      <main className={`
-        ${isMobileScreen && mobileMenuOpen ? 'pt-20 lg:pt-0' : 'pt-16 lg:pt-20'}
-        min-h-screen
-      `}>
-        <slot />
-      </main>
+      </div>
     </>
   )
 }

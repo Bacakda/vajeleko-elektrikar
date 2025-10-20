@@ -57,6 +57,11 @@ body {
     margin: 0 auto !important;
   }
 
+  /* Z-index utility pro closing overlay */
+  .z-45 {
+    z-index: 45;
+  }
+
   /* GPU acceleration */
   .gpu-accelerated {
     transform: translateZ(0);
@@ -83,28 +88,11 @@ html {
 
 /* Mobilní optimalizace */
 @media (max-width: 768px) {
-  /* Vypnout animace na mobilu pro lepší výkon */
+  /* Vypnout speciální animace na mobilu pro lepší výkon */
   .animate-float,
   .animate-pulse-slow,
   .animate-scale-in {
     animation: none !important;
-  }
-  
-  /* Vypnout Framer Motion animace na mobilu */
-  [data-framer-motion-animate],
-  [data-framer-motion-initial] {
-    animation: none !important;
-    transition: none !important;
-    transform: none !important;
-  }
-  
-  /* Všechny motion.div elementy - vypnout animace */
-  div[style*="transform"] {
-    transform: none !important;
-  }
-  
-  div[style*="opacity"] {
-    opacity: 1 !important;
   }
   
   /* Optimalizovat gradienty na mobilu */

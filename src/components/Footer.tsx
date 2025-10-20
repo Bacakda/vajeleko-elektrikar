@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import {
@@ -13,6 +13,16 @@ import PhoneModal from './PhoneModal'
 export default function Footer() {
   const currentYear = new Date().getFullYear()
   const [isPhoneModalOpen, setIsPhoneModalOpen] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const quickLinks = [
     { name: 'Domů', href: '/' },
@@ -40,10 +50,10 @@ export default function Footer() {
           
           {/* Company Info - Logo v STŘEDU nahoře */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
+            whileInView={isMobile ? { opacity: 1 } : { opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={isMobile ? { duration: 0.3 } : { delay: 0.1, duration: 0.6 }}
             className="text-center mb-6"
           >
             {/* Logo v STŘEDU - SVĚTLÉ LOGO Z HEADERU */}
@@ -97,10 +107,10 @@ export default function Footer() {
             
             {/* Quick Links */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
+              whileInView={isMobile ? { opacity: 1 } : { opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.1, duration: 0.6 }}
+              transition={isMobile ? { duration: 0.3 } : { delay: 0.1, duration: 0.6 }}
             >
               <h4 className="text-sm font-semibold text-gray-300 mb-4 border-b border-gray-700 pb-2">Rychlé odkazy</h4>
               <ul className="space-y-2 text-sm">
@@ -119,10 +129,10 @@ export default function Footer() {
 
             {/* Services */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
+              whileInView={isMobile ? { opacity: 1 } : { opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.2, duration: 0.6 }}
+              transition={isMobile ? { duration: 0.3 } : { delay: 0.2, duration: 0.6 }}
             >
               <h4 className="text-sm font-semibold text-gray-300 mb-4 border-b border-gray-700 pb-2">Naše služby</h4>
               <ul className="space-y-2 text-sm">
@@ -145,10 +155,10 @@ export default function Footer() {
 
           {/* Contact Info */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
+            whileInView={isMobile ? { opacity: 1 } : { opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.3, duration: 0.6 }}
+            transition={isMobile ? { duration: 0.3 } : { delay: 0.3, duration: 0.6 }}
           >
             <div className="space-y-3 text-sm">
               
@@ -181,10 +191,10 @@ export default function Footer() {
         <div className="hidden sm:grid lg:grid-cols-4 gap-8 mb-12">
           {/* Company Info - VĚTŠÍ LOGO */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
+            whileInView={isMobile ? { opacity: 1 } : { opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={isMobile ? { duration: 0.3 } : { duration: 0.6 }}
             className="lg:col-span-1"
           >
             {/* Větší logo */}
@@ -230,10 +240,10 @@ export default function Footer() {
 
           {/* Quick Links */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
+            whileInView={isMobile ? { opacity: 1 } : { opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.1, duration: 0.6 }}
+            transition={isMobile ? { duration: 0.3 } : { delay: 0.1, duration: 0.6 }}
             className="lg:col-span-1"
           >
             <h3 className="text-lg sm:text-xl font-bold mb-6">Rychlé odkazy</h3>
@@ -253,10 +263,10 @@ export default function Footer() {
 
           {/* Services */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
+            whileInView={isMobile ? { opacity: 1 } : { opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.2, duration: 0.6 }}
+            transition={isMobile ? { duration: 0.3 } : { delay: 0.2, duration: 0.6 }}
             className="lg:col-span-1"
           >
             <h3 className="text-lg sm:text-xl font-bold mb-6">Naše služby</h3>
@@ -276,10 +286,10 @@ export default function Footer() {
 
           {/* Contact Info - Pracovní doba v 2 sloupcích */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
+            whileInView={isMobile ? { opacity: 1 } : { opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.3, duration: 0.6 }}
+            transition={isMobile ? { duration: 0.3 } : { delay: 0.3, duration: 0.6 }}
             className="lg:col-span-1"
           >
             <div className="space-y-4">
@@ -311,10 +321,10 @@ export default function Footer() {
 
         {/* Copyright - Unified */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={isMobile ? { opacity: 0 } : { opacity: 0 }}
+          whileInView={isMobile ? { opacity: 1 } : { opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.4, duration: 0.6 }}
+          transition={isMobile ? { duration: 0.3 } : { delay: 0.4, duration: 0.6 }}
           className="pt-6 sm:pt-8 border-t border-gray-700 text-center"
         >
           <p className="text-gray-400 text-sm">
@@ -326,9 +336,10 @@ export default function Footer() {
       {/* Quick Call Button */}
       <motion.button
         onClick={() => setIsPhoneModalOpen(true)}
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
+        initial={isMobile ? { opacity: 0 } : { opacity: 0 }}
+        whileInView={isMobile ? { opacity: 1 } : { opacity: 1 }}
         viewport={{ once: true }}
+        transition={isMobile ? { duration: 0.3 } : { delay: 0.4, duration: 0.6 }}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         className="fixed bottom-4 sm:bottom-8 right-4 sm:right-8 w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-r from-blue-600 to-electric-500 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all z-50"

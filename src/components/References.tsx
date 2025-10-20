@@ -50,8 +50,8 @@ export default function References() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
-          initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+          initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
+          whileInView={isMobile ? { opacity: 1 } : { opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={isMobile ? { duration: 0.3 } : { duration: 0.6 }}
           className="text-center mb-0"
