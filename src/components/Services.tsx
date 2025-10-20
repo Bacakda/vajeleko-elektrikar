@@ -210,7 +210,7 @@ export default function Services() {
                 </h3>
               </div>
               <div
-                className="relative p-8 h-48 rounded-2xl shadow-lg border border-gray-200 hover:shadow-2xl hover:border-blue-300 hover:-translate-y-1 transition-all duration-200 overflow-hidden"
+                className="relative h-48 rounded-2xl shadow-lg border border-gray-200 hover:shadow-2xl hover:border-blue-300 hover:-translate-y-1 transition-all duration-200 overflow-hidden"
               >
                 <Image
                   src={index === 0 ? '/images/projects/části haly Tehovec/5.webp' : 
@@ -218,11 +218,11 @@ export default function Services() {
                        '/images/projects/Demontáž a zpětná/2.webp'}
                   alt={service.title}
                   fill
-                  className="object-cover"
+                  className="object-cover -z-10"
                   sizes="300px"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-                <div className={`absolute inset-0 flex items-center justify-center z-10`}>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent -z-10"></div>
+                <div className="absolute inset-0 flex items-center justify-center z-10 p-8">
                   <div className={`w-16 h-16 ${service.iconBg} rounded-xl flex items-center justify-center transition-transform duration-200 hover:scale-110`}>
                     <service.icon className={`w-8 h-8 ${service.iconColor}`} />
                   </div>
@@ -273,17 +273,17 @@ export default function Services() {
                 </h3>
               </div>
               <div
-                className="relative p-8 h-48 rounded-2xl shadow-lg border border-gray-200 hover:shadow-2xl hover:border-blue-300 hover:-translate-y-1 transition-all duration-200 overflow-hidden"
+                className="relative h-48 rounded-2xl shadow-lg border border-gray-200 hover:shadow-2xl hover:border-blue-300 hover:-translate-y-1 transition-all duration-200 overflow-hidden"
               >
                 <Image
                   src={index === 0 ? '/images/projects/hromosvodu údolí čerpadel/1.webp' : '/images/projects/budova bývalé banky/1.webp'}
                   alt={service.title}
                   fill
-                  className="object-cover"
+                  className="object-cover -z-10"
                   sizes="300px"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-                <div className={`absolute inset-0 flex items-center justify-center z-10`}>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent -z-10"></div>
+                <div className="absolute inset-0 flex items-center justify-center z-10 p-8">
                   <div className={`w-16 h-16 ${service.iconBg} rounded-xl flex items-center justify-center transition-transform duration-200 hover:scale-110`}>
                     <service.icon className={`w-8 h-8 ${service.iconColor}`} />
                   </div>
