@@ -90,6 +90,23 @@ html {
     animation: none !important;
   }
   
+  /* Vypnout Framer Motion animace na mobilu */
+  [data-framer-motion-animate],
+  [data-framer-motion-initial] {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+  
+  /* Všechny motion.div elementy - vypnout animace */
+  div[style*="transform"] {
+    transform: none !important;
+  }
+  
+  div[style*="opacity"] {
+    opacity: 1 !important;
+  }
+  
   /* Optimalizovat gradienty na mobilu */
   .gradient-text {
     background: linear-gradient(to right, #0B1D36 0%, #FFC52E 100%);

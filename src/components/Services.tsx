@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   BoltIcon,
   FireIcon,
@@ -22,7 +22,7 @@ interface ServiceItem {
 }
 
 // Mobile Service Cards - Všechny 6 služeb, 3 řádky po 2
-function MobileServiceCards({ services }: { services: ServiceItem[] }) {
+function MobileServiceCards({ services, isMobile }: { services: ServiceItem[], isMobile: boolean }) {
   const getImageUrl = (service: ServiceItem) => {
     if (service.title.includes('Elektroinstalace')) return '/images/projects/části haly Tehovec/5.webp'
     if (service.title.includes('čerpadla')) return '/images/projects/klimatizace - Toušice/1.webp'
@@ -48,10 +48,10 @@ function MobileServiceCards({ services }: { services: ServiceItem[] }) {
           {row.map((service, serviceIndex) => (
             <motion.div
               key={serviceIndex}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: (rowIndex * 2 + serviceIndex) * 0.1, duration: 0.6 }}
+              transition={isMobile ? { duration: 0 } : { delay: (rowIndex * 2 + serviceIndex) * 0.1, duration: 0.6 }}
               className="w-full"
             >
               {/* Kompletní karta: fixní výška pro konzistentní layout */}
@@ -92,10 +92,10 @@ function MobileServiceCards({ services }: { services: ServiceItem[] }) {
 
       {/* Speciální karta - Elektro pohotovost 24/7 */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+        whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ delay: 0.6, duration: 0.6 }}
+        transition={isMobile ? { duration: 0 } : { delay: 0.6, duration: 0.6 }}
         className="bg-hero-dark-blue p-6 rounded-2xl shadow-lg text-center border border-hero-dark-blue/20 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
       >
         <div className="w-12 h-12 bg-hero-yellow/20 rounded-xl flex items-center justify-center mb-4 mx-auto hover:scale-110 transition-transform duration-300">
@@ -109,10 +109,10 @@ function MobileServiceCards({ services }: { services: ServiceItem[] }) {
       {/* Tlačítko Více informací - PŘIDÁNO PRO MOBILE */}
       <motion.a
         href="/sluzby"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+        whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ delay: 0.7, duration: 0.6 }}
+        transition={isMobile ? { duration: 0 } : { delay: 0.7, duration: 0.6 }}
         className="flex items-center justify-center gap-3 group cursor-pointer mt-6"
       >
         <span className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-black via-gray-800 via-gray-400 via-gray-800 to-black bg-clip-text text-transparent bg-[length:300%_auto] animate-gradient">
@@ -125,6 +125,17 @@ function MobileServiceCards({ services }: { services: ServiceItem[] }) {
 }
 
 export default function Services() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const updateSize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    updateSize(); // Set initial value
+    window.addEventListener('resize', updateSize);
+    return () => window.removeEventListener('resize', updateSize);
+  }, []);
+
   const services = [
     {
       icon: BoltIcon,
@@ -326,7 +337,7 @@ export default function Services() {
 
         {/* Mobile Services - 3 řádky po 2 službách */}
         <div className="md:hidden space-y-6 mt-0 -mt-3">
-          <MobileServiceCards services={services} />
+          <MobileServiceCards services={services} isMobile={isMobile} />
         </div>
       </div>
     </section>

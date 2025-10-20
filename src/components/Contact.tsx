@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useState, useEffect } from 'react'
 import {
   PhoneIcon,
   EnvelopeIcon,
@@ -9,6 +10,17 @@ import {
 } from '@heroicons/react/24/outline'
 
 export default function Contact() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const contactInfo = [
     {
       icon: PhoneIcon,
@@ -37,233 +49,63 @@ export default function Contact() {
   ]
 
   return (
-    <section id="contact" className="py-20">
+    <section id="contact" className="py-12 sm:py-16 lg:py-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12">
-          {/* Contact Info */}
+        {/* Na mobilu: formulář nahoře, kontakty dole. Na desktopu: vedle sebe */}
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+          {/* Contact Form - na mobilu NAHOŘE, na desktopu vpravo */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={isMobile ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
+            whileInView={isMobile ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="space-y-6"
+            transition={isMobile ? { duration: 0 } : { duration: 0.8 }}
+            className="bg-white p-6 sm:p-8 rounded-2xl shadow-xl order-first lg:order-last"
           >
-            {contactInfo.map((info, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1, duration: 0.6 }}
-                className="bg-white rounded-2xl shadow-lg overflow-hidden"
-              >
-                {info.title === 'Adresa' ? (
-                  // Speciální layout pro adresu s mapou
-                  <div className="relative h-32">
-                    {/* Mapa na pozadí - posunuta pro lepší viditelnost */}
-                    <div className="absolute inset-0 rounded-2xl overflow-hidden">
-                      <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2560.5!2d14.532!3d50.065!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470c0b0b0b0b0b0b%3A0x0!2sChudenick%C3%A1%201059%2F30%2C%20Hostiva%C5%99%2C%20102%2000%20Praha!5e0!3m2!1scs!2scz!4v1234567890"
-                        width="150%"
-                        height="100%"
-                        style={{ 
-                          border: 0, 
-                          minHeight: '128px',
-                          transform: 'translateX(2%)',
-                          transformOrigin: 'center center'
-                        }}
-                        allowFullScreen
-                        loading="lazy"
-                        referrerPolicy="no-referrer-when-downgrade"
-                        title="Google Maps - VaJeleko s.r.o."
-                      ></iframe>
-                    </div>
-                    
-                    {/* Bílý gradient overlay zleva */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-white via-white/95 via-white/70 to-transparent w-5/6 pointer-events-none rounded-2xl"></div>
-                    
-                    {/* Text obsah */}
-                    <div className="relative z-10 pl-8 pr-6 py-6 flex items-center h-full">
-                      <div className="flex items-center space-x-4">
-                        <div className="flex-shrink-0">
-                          <div className="w-14 h-14 bg-gradient-to-br from-blue-100 to-electric-100 rounded-xl flex items-center justify-center shadow-lg">
-                            <info.icon className="w-7 h-7 text-blue-600" />
-                          </div>
-                        </div>
-                        <div>
-                          <h3 className="text-xl font-bold text-gray-900 mb-1">
-                            {info.title}
-                          </h3>
-                          <div className="space-y-0.5">
-                            <p className="text-gray-800 font-medium text-lg">
-                              {info.details[0]}
-                            </p>
-                            <p className="text-gray-600 text-base">
-                              {info.details[1]}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ) : info.title === 'Telefon' ? (
-                  // Speciální layout pro telefon - čísla vedle sebe
-                  <div className="p-6">
-                    <div className="flex items-center space-x-4 mb-4">
-                      <div className="flex-shrink-0">
-                        <div className="w-14 h-14 bg-gradient-to-br from-blue-100 to-electric-100 rounded-xl flex items-center justify-center shadow-lg">
-                          <info.icon className="w-7 h-7 text-blue-600" />
-                        </div>
-                      </div>
-                      <h3 className="text-xl font-bold text-gray-900">
-                        {info.title}
-                      </h3>
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      {info.details.map((phone, phoneIndex) => (
-                        <motion.a
-                          key={phoneIndex}
-                          href={`tel:${phone.replace(/\s/g, '')}`}
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
-                          className="flex items-center justify-center p-3 bg-gradient-to-r from-blue-50 to-electric-50 hover:from-blue-100 hover:to-electric-100 border border-blue-200 rounded-xl transition-all hover:shadow-lg group"
-                        >
-                          <PhoneIcon className="w-5 h-5 text-blue-600 mr-2 group-hover:scale-110 transition-transform" />
-                          <span className="font-semibold text-gray-800">{phone}</span>
-                        </motion.a>
-                      ))}
-                    </div>
-                  </div>
-                ) : info.title === 'Email' ? (
-                  // Speciální layout pro email - emaily vedle sebe
-                  <div className="p-6">
-                    <div className="flex items-center space-x-4 mb-4">
-                      <div className="flex-shrink-0">
-                        <div className="w-14 h-14 bg-gradient-to-br from-blue-100 to-electric-100 rounded-xl flex items-center justify-center shadow-lg">
-                          <info.icon className="w-7 h-7 text-blue-600" />
-                        </div>
-                      </div>
-                      <h3 className="text-xl font-bold text-gray-900">
-                        {info.title}
-                      </h3>
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      {info.details.map((email, emailIndex) => (
-                        <motion.a
-                          key={emailIndex}
-                          href={`mailto:${email}`}
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
-                          className="flex items-center justify-center p-3 bg-gradient-to-r from-blue-50 to-electric-50 hover:from-blue-100 hover:to-electric-100 border border-blue-200 rounded-xl transition-all hover:shadow-lg group"
-                        >
-                          <EnvelopeIcon className="w-5 h-5 text-blue-600 mr-2 group-hover:scale-110 transition-transform" />
-                          <span className="font-semibold text-gray-800">{email}</span>
-                        </motion.a>
-                      ))}
-                    </div>
-                  </div>
-                ) : (
-                  // Původní layout pro ostatní kontaktní informace
-                  <motion.a
-                    href={info.link}
-                    whileHover={{ x: 10, scale: 1.02 }}
-                    className="flex items-start space-x-4 p-6 hover:shadow-xl transition-all group block"
-                  >
-                    <div className="flex-shrink-0">
-                      <div className="w-14 h-14 bg-gradient-to-br from-blue-100 to-electric-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <info.icon className="w-7 h-7 text-blue-600" />
-                      </div>
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">
-                        {info.title}
-                      </h3>
-                      {info.details.map((detail, i) => (
-                        <p key={i} className="text-gray-600">
-                          {detail}
-                        </p>
-                      ))}
-                    </div>
-                  </motion.a>
-                )}
-              </motion.div>
-            ))}
-
-            {/* 24/7 Emergency Banner */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-              className="p-8 bg-gradient-to-r from-electric-500 to-electric-600 rounded-2xl text-white shadow-xl"
-            >
-              <ClockIcon className="w-12 h-12 mb-4" />
-              <h3 className="text-2xl font-bold mb-2">24/7 Pohotovost</h3>
-              <p className="mb-4">
-                V případě naléhavé potřeby nás neváhejte kontaktovat kdykoliv.
-              </p>
-              <a
-                href="tel:+420722914120"
-                className="inline-block px-6 py-3 bg-white text-electric-600 rounded-full font-bold hover:bg-gray-100 transition-all"
-              >
-                Zavolat nyní
-              </a>
-            </motion.div>
-          </motion.div>
-
-          {/* Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="bg-white p-8 rounded-2xl shadow-xl"
-          >
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6">
               Nezávazná poptávka
             </h3>
-            <form className="space-y-6">
+            <form className="space-y-4 sm:space-y-6">
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
                   Jméno a příjmení *
                 </label>
                 <input
                   type="text"
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-sm"
                   placeholder="Vaše jméno"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
                   Email *
                 </label>
                 <input
                   type="email"
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-sm"
                   placeholder="vas@email.cz"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
                   Telefon *
                 </label>
                 <input
                   type="tel"
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-sm"
                   placeholder="+420 123 456 789"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
                   Vyberte službu
                 </label>
-                <select className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                <select className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-sm">
                   <option>Elektroinstalace</option>
                   <option>Tepelná čerpadla a klimatizace</option>
                   <option>Fotovoltaika</option>
@@ -276,28 +118,199 @@ export default function Contact() {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
                   Zpráva *
                 </label>
                 <textarea
                   required
-                  rows={4}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
+                  rows={3}
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none text-sm"
                   placeholder="Popište nám Váš požadavek..."
                 ></textarea>
               </div>
 
               <button
                 type="submit"
-                className="w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-electric-500 text-white rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all hover:scale-105"
+                className="w-full px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-electric-500 text-white rounded-xl font-bold text-sm sm:text-lg shadow-lg hover:shadow-xl transition-all hover:scale-105"
               >
                 Odeslat poptávku
               </button>
 
-              <p className="text-sm text-gray-500 text-center">
+              <p className="text-xs sm:text-sm text-gray-500 text-center">
                 * Povinné pole
               </p>
             </form>
+          </motion.div>
+
+          {/* Contact Info - na mobilu DOLE, na desktopu vlevo */}
+          <motion.div
+            initial={isMobile ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
+            whileInView={isMobile ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={isMobile ? { duration: 0 } : { duration: 0.8 }}
+            className="space-y-4 sm:space-y-6 order-last lg:order-first"
+          >
+            {contactInfo.map((info, index) => (
+              <motion.div
+                key={index}
+                initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={isMobile ? { duration: 0 } : { delay: index * 0.1, duration: 0.6 }}
+                className="bg-white rounded-2xl shadow-lg overflow-hidden"
+              >
+                {info.title === 'Adresa' ? (
+                  // Speciální layout pro adresu s mapou - menší na mobilu
+                  <div className="relative h-24 sm:h-32">
+                    {/* Mapa na pozadí */}
+                    <div className="absolute inset-0 rounded-2xl overflow-hidden">
+                      <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2560.5!2d14.532!3d50.065!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470c0b0b0b0b0b0b%3A0x0!2sChudenick%C3%A1%201059%2F30%2C%20Hostiva%C5%99%2C%20102%2000%20Praha!5e0!3m2!1scs!2scz!4v1234567890"
+                        width="150%"
+                        height="100%"
+                        style={{ 
+                          border: 0, 
+                          minHeight: '96px',
+                          transform: 'translateX(2%)',
+                          transformOrigin: 'center center'
+                        }}
+                        allowFullScreen
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                        title="Google Maps - VaJeleko s.r.o."
+                      ></iframe>
+                    </div>
+                    
+                    {/* Gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-white via-white/95 via-white/70 to-transparent w-5/6 pointer-events-none rounded-2xl"></div>
+                    
+                    {/* Text obsah - menší na mobilu */}
+                    <div className="relative z-10 pl-3 sm:pl-8 pr-3 sm:pr-6 py-3 sm:py-6 flex items-center h-full">
+                      <div className="flex items-center space-x-2 sm:space-x-4">
+                        <div className="flex-shrink-0">
+                          <div className="w-10 h-10 sm:w-14 sm:h-14 bg-gradient-to-br from-blue-100 to-electric-100 rounded-xl flex items-center justify-center shadow-lg">
+                            <info.icon className="w-5 h-5 sm:w-7 sm:h-7 text-blue-600" />
+                          </div>
+                        </div>
+                        <div>
+                          <h3 className="text-base sm:text-xl font-bold text-gray-900 mb-0.5 sm:mb-1">
+                            {info.title}
+                          </h3>
+                          <div className="space-y-0">
+                            <p className="text-gray-800 font-medium text-xs sm:text-lg">
+                              {info.details[0]}
+                            </p>
+                            <p className="text-gray-600 text-xs sm:text-base">
+                              {info.details[1]}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ) : info.title === 'Telefon' ? (
+                  // Speciální layout pro telefon - 1 sloupec na mobilu, 2 na desktopu
+                  <div className="p-4 sm:p-6">
+                    <div className="flex items-center space-x-2 sm:space-x-4 mb-3 sm:mb-4">
+                      <div className="flex-shrink-0">
+                        <div className="w-10 h-10 sm:w-14 sm:h-14 bg-gradient-to-br from-blue-100 to-electric-100 rounded-xl flex items-center justify-center shadow-lg">
+                          <info.icon className="w-5 h-5 sm:w-7 sm:h-7 text-blue-600" />
+                        </div>
+                      </div>
+                      <h3 className="text-base sm:text-xl font-bold text-gray-900">
+                        {info.title}
+                      </h3>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+                      {info.details.map((phone, phoneIndex) => (
+                        <motion.a
+                          key={phoneIndex}
+                          href={`tel:${phone.replace(/\s/g, '')}`}
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          className="flex items-center justify-center p-2 sm:p-3 bg-gradient-to-r from-blue-50 to-electric-50 hover:from-blue-100 hover:to-electric-100 border border-blue-200 rounded-xl transition-all hover:shadow-lg group text-xs sm:text-base"
+                        >
+                          <PhoneIcon className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 mr-1.5 sm:mr-2 group-hover:scale-110 transition-transform" />
+                          <span className="font-semibold text-gray-800 truncate">{phone}</span>
+                        </motion.a>
+                      ))}
+                    </div>
+                  </div>
+                ) : info.title === 'Email' ? (
+                  // Speciální layout pro email - 1 sloupec na mobilu, 2 na desktopu
+                  <div className="p-4 sm:p-6">
+                    <div className="flex items-center space-x-2 sm:space-x-4 mb-3 sm:mb-4">
+                      <div className="flex-shrink-0">
+                        <div className="w-10 h-10 sm:w-14 sm:h-14 bg-gradient-to-br from-blue-100 to-electric-100 rounded-xl flex items-center justify-center shadow-lg">
+                          <info.icon className="w-5 h-5 sm:w-7 sm:h-7 text-blue-600" />
+                        </div>
+                      </div>
+                      <h3 className="text-base sm:text-xl font-bold text-gray-900">
+                        {info.title}
+                      </h3>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+                      {info.details.map((email, emailIndex) => (
+                        <motion.a
+                          key={emailIndex}
+                          href={`mailto:${email}`}
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          className="flex items-center justify-center p-2 sm:p-3 bg-gradient-to-r from-blue-50 to-electric-50 hover:from-blue-100 hover:to-electric-100 border border-blue-200 rounded-xl transition-all hover:shadow-lg group text-xs sm:text-base"
+                        >
+                          <EnvelopeIcon className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 mr-1.5 sm:mr-2 group-hover:scale-110 transition-transform" />
+                          <span className="font-semibold text-gray-800 truncate">{email}</span>
+                        </motion.a>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  // Pracovní doba
+                  <motion.a
+                    href={info.link}
+                    whileHover={{ x: 10, scale: 1.02 }}
+                    className="flex items-start space-x-2 sm:space-x-4 p-4 sm:p-6 hover:shadow-xl transition-all group block"
+                  >
+                    <div className="flex-shrink-0">
+                      <div className="w-10 h-10 sm:w-14 sm:h-14 bg-gradient-to-br from-blue-100 to-electric-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <info.icon className="w-5 h-5 sm:w-7 sm:h-7 text-blue-600" />
+                      </div>
+                    </div>
+                    <div>
+                      <h3 className="text-base sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2">
+                        {info.title}
+                      </h3>
+                      {info.details.map((detail, i) => (
+                        <p key={i} className="text-gray-600 text-xs sm:text-base">
+                          {detail}
+                        </p>
+                      ))}
+                    </div>
+                  </motion.a>
+                )}
+              </motion.div>
+            ))}
+
+            {/* 24/7 Emergency Banner - menší na mobilu */}
+            <motion.div
+              initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={isMobile ? { duration: 0 } : { delay: 0.4, duration: 0.6 }}
+              className="p-4 sm:p-8 bg-gradient-to-r from-electric-500 to-electric-600 rounded-2xl text-white shadow-xl"
+            >
+              <ClockIcon className="w-8 h-8 sm:w-12 sm:h-12 mb-2 sm:mb-4" />
+              <h3 className="text-lg sm:text-2xl font-bold mb-1 sm:mb-2">24/7 Pohotovost</h3>
+              <p className="mb-3 sm:mb-4 text-sm sm:text-base">
+                V případě naléhavé potřeby nás neváhejte kontaktovat kdykoliv.
+              </p>
+              <a
+                href="tel:+420722914120"
+                className="inline-block px-4 sm:px-6 py-2 sm:py-3 bg-white text-electric-600 rounded-full font-bold hover:bg-gray-100 transition-all text-sm sm:text-base"
+              >
+                Zavolat nyní
+              </a>
+            </motion.div>
           </motion.div>
         </div>
       </div>

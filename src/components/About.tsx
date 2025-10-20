@@ -1,9 +1,20 @@
 'use client'
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 export default function About() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -44,13 +55,15 @@ export default function About() {
     },
     {
       icon: "M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z",
-      title: "Rychlé zásahy i revize elektro",
-      description: "Zajišťujeme havarijní servis i kompletní revizní zprávy."
+      title: "24/7 Pohotovost",
+      description: "Nonstop technická podpora a okamžitý zásah v emergencích."
+
     },
     {
-      icon: "M4.5 12a7.5 7.5 0 0 0 15 0m-15 0a7.5 7.5 0 1 1 15 0m-15 0H3m16.5 0H21m-1.5 0H12m-8.457 3.077 1.41-.513m14.095-5.13 1.41-.513M5.106 17.785l1.15-.964m11.49-9.642 1.149-.964M7.501 19.795l.75-1.3m7.5-12.99.75-1.3m-6.063 16.658.26-1.477m2.605-14.772.26-1.477m0 17.726-.26-1.477M10.698 4.614l-.26-1.477M16.5 19.794l-.75-1.299M7.5 4.205 12 12m6.894 5.785-1.149-.964M6.256 7.178l-1.15-.964m15.352 8.864-1.41-.513M4.954 9.435l-1.41-.514M12.002 12l-3.75 6.495",
-      title: "Řešení na míru vašeho projektu",
-      description: "Každou zakázku přizpůsobíme vašim potřebám a možnostem."
+      icon: "M14.828 14.828a4 4 0 0 1-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z",
+      title: "Partnerství s důvěryhodností",
+      description: "Spolupracujeme s renomovanými firmami a dodavateli."
+
     }
   ];
 
@@ -68,10 +81,10 @@ export default function About() {
           {features.map((feature, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 0.6 }}
+              transition={isMobile ? { duration: 0 } : { delay: index * 0.1, duration: 0.6 }}
               className="text-center p-4 sm:p-6 border border-hero-dark-blue rounded-xl hover:shadow-xl transition-all backdrop-blur-sm bg-white/80 lg:col-span-1"
             >
               <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-hero-dark-blue/10 to-hero-yellow/10 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 transition-transform duration-200 hover:scale-110">

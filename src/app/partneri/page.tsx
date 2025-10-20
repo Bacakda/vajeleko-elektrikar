@@ -1,11 +1,23 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
 export default function PartnersPage() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const partners = [
     {
       id: 'zev-svetice',
@@ -101,10 +113,10 @@ export default function PartnersPage() {
               <motion.div
                 key={partner.id}
                 id={partner.id}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+                whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
-                transition={{ delay: index * 0.2, duration: 0.6 }}
+                transition={isMobile ? { duration: 0 } : { delay: index * 0.2, duration: 0.6 }}
                 className="bg-white rounded-3xl shadow-xl border border-gray-200 overflow-hidden"
               >
                 <div className="grid lg:grid-cols-3 gap-8 p-8 lg:p-12">

@@ -159,13 +159,13 @@ export default function Header() {
       >
         <div 
           className={`
-            fixed top-0 right-0 max-h-screen w-80 bg-white/95 backdrop-blur-xl border-l-2 border-gray-200 shadow-2xl
-            transform transition-all duration-300 ease-out overflow-y-auto rounded-l-3xl
+            fixed top-0 right-0 h-screen w-80 bg-white/95 backdrop-blur-xl border-l-2 border-gray-200 shadow-2xl
+            transform transition-all duration-300 ease-out rounded-l-3xl flex flex-col
             ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}
           `}
         >
           {/* Header sidebaru */}
-          <div className="p-6 border-b flex justify-between items-center border-gray-200 bg-white/95">
+          <div className="p-6 border-b flex justify-between items-center border-gray-200 bg-white/95 flex-shrink-0">
             <div className="flex items-center">
               <Image
                 src="/images/logos/logo-header.webp"
@@ -184,7 +184,7 @@ export default function Header() {
           </div>
           
           {/* Navigační menu - VŽDY TMAVÝ TEXT */}
-          <nav className="p-6 space-y-1 flex-1">
+          <nav className="p-6 space-y-1 flex-1 overflow-y-auto">
             {navLinks.map((link) => (
               <Link 
                 key={link.name}
@@ -201,7 +201,7 @@ export default function Header() {
           </nav>
           
           {/* Kontaktní sekce - dole - VŽDY tmavý text */}
-          <div className="p-6 border-t border-gray-200">
+          <div className="p-6 border-t border-gray-200 flex-shrink-0 overflow-y-auto">
             <h3 className="text-xl font-bold mb-6 text-hero-dark-blue">Kontakty</h3>
             <div className="space-y-4 mb-8">
               <a 
