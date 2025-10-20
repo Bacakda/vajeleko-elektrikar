@@ -17,12 +17,12 @@ export const projects: Project[] = [
     location: 'Tehovec - Bulánka',
     totalImages: 6,
     images: [
-      '/images/projects/Montáž haly Tehovec - Bulánka /6.webp',
-      '/images/projects/Montáž haly Tehovec - Bulánka /5.webp',
-      '/images/projects/Montáž haly Tehovec - Bulánka /4.webp',
-      '/images/projects/Montáž haly Tehovec - Bulánka /3.webp',
-      '/images/projects/Montáž haly Tehovec - Bulánka /2.webp',
-      '/images/projects/Montáž haly Tehovec - Bulánka /1.webp'
+      '/images/projects/Montáž haly Tehovec - Bulánka/6.webp',
+      '/images/projects/Montáž haly Tehovec - Bulánka/5.webp',
+      '/images/projects/Montáž haly Tehovec - Bulánka/4.webp',
+      '/images/projects/Montáž haly Tehovec - Bulánka/3.webp',
+      '/images/projects/Montáž haly Tehovec - Bulánka/2.webp',
+      '/images/projects/Montáž haly Tehovec - Bulánka/1.webp'
     ]
   },
   {

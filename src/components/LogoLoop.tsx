@@ -55,6 +55,7 @@ const useResizeObserver = (
   elements: Array<React.RefObject<Element | null>>,
   dependencies: React.DependencyList
 ) => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!window.ResizeObserver) {
       const handleResize = () => callback();
@@ -83,6 +84,7 @@ const useImageLoader = (
   onLoad: () => void,
   dependencies: React.DependencyList
 ) => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const images = seqRef.current?.querySelectorAll('img') ?? [];
 
@@ -130,6 +132,7 @@ const useAnimationLoop = (
   const offsetRef = useRef(0);
   const velocityRef = useRef(0);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
@@ -314,6 +317,7 @@ export const LogoLoop = React.memo<LogoLoopProps>(
             {getNodeItem(item).node}
           </span>
         ) : (
+          // eslint-disable-next-line @next/next/no-img-element
           <img
             className={cx(
               'h-[var(--logoloop-logoHeight)] w-auto block object-contain',
