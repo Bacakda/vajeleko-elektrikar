@@ -86,13 +86,14 @@ export default function PartnersPage() {
 
       <Header />
 
-      {/* Hero Section - původní velikost na desktopu, menší na mobilu */}
-      <section className="pt-32 pb-16">
+      {/* Hero Section */}
+      <section className="pt-32 pb-20 bg-gradient-to-br from-blue-50 to-electric-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
+            whileInView={isMobile ? { opacity: 1 } : { opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={isMobile ? { duration: 0.3 } : { duration: 0.6 }}
             className="text-center max-w-4xl mx-auto"
           >
             <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
@@ -113,10 +114,10 @@ export default function PartnersPage() {
               <motion.div
                 key={partner.id}
                 id={partner.id}
-                initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-                whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+                initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 50 }}
+                whileInView={isMobile ? { opacity: 1 } : { opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
-                transition={isMobile ? { duration: 0 } : { delay: index * 0.2, duration: 0.6 }}
+                transition={isMobile ? { duration: 0.3 } : { delay: index * 0.2, duration: 0.6 }}
                 className="bg-white rounded-3xl shadow-xl border border-gray-200 overflow-hidden"
               >
                 <div className="grid lg:grid-cols-3 gap-8 p-8 lg:p-12">

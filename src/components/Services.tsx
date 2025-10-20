@@ -48,10 +48,10 @@ function MobileServiceCards({ services, isMobile }: { services: ServiceItem[], i
           {row.map((service, serviceIndex) => (
             <motion.div
               key={serviceIndex}
-              initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+              initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
+              whileInView={isMobile ? { opacity: 1 } : { opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={isMobile ? { duration: 0 } : { delay: (rowIndex * 2 + serviceIndex) * 0.1, duration: 0.6 }}
+              transition={isMobile ? { duration: 0.3 } : { delay: (rowIndex * 2 + serviceIndex) * 0.1, duration: 0.6 }}
               className="w-full"
             >
               {/* Kompletní karta: fixní výška pro konzistentní layout */}
@@ -92,10 +92,10 @@ function MobileServiceCards({ services, isMobile }: { services: ServiceItem[], i
 
       {/* Speciální karta - Elektro pohotovost 24/7 */}
       <motion.div
-        initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-        whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+        initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
+        whileInView={isMobile ? { opacity: 1 } : { opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={isMobile ? { duration: 0 } : { delay: 0.6, duration: 0.6 }}
+        transition={isMobile ? { duration: 0.3 } : { delay: 0.6, duration: 0.6 }}
         className="bg-hero-dark-blue p-6 rounded-2xl shadow-lg text-center border border-hero-dark-blue/20 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
       >
         <div className="w-12 h-12 bg-hero-yellow/20 rounded-xl flex items-center justify-center mb-4 mx-auto hover:scale-110 transition-transform duration-300">
@@ -109,10 +109,10 @@ function MobileServiceCards({ services, isMobile }: { services: ServiceItem[], i
       {/* Tlačítko Více informací - PŘIDÁNO PRO MOBILE */}
       <motion.a
         href="/sluzby"
-        initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-        whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+        initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
+        whileInView={isMobile ? { opacity: 1 } : { opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={isMobile ? { duration: 0 } : { delay: 0.7, duration: 0.6 }}
+        transition={isMobile ? { duration: 0.3 } : { delay: 0.7, duration: 0.6 }}
         className="flex items-center justify-center gap-3 group cursor-pointer mt-6"
       >
         <span className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-black via-gray-800 via-gray-400 via-gray-800 to-black bg-clip-text text-transparent bg-[length:300%_auto] animate-gradient">
@@ -203,136 +203,34 @@ export default function Services() {
           </p>
         </motion.div>
 
-        {/* Desktop Services Grid */}
+        {/* Desktop Services - 3 sloupce */}
         <div className="hidden md:grid md:grid-cols-3 gap-8">
-          {/* První řada - 3 služby */}
-          {services.slice(0, 3).map((service, index) => (
+          {services.map((service, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
+              whileInView={isMobile ? { opacity: 1 } : { opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 0.6 }}
-              className="relative"
+              transition={isMobile ? { duration: 0.3 } : { delay: index * 0.1, duration: 0.6 }}
+              className="relative h-48 rounded-2xl shadow-lg border border-gray-200 hover:shadow-2xl hover:border-blue-300 hover:-translate-y-1 transition-all duration-200 overflow-hidden"
             >
-              <div className="bg-hero-dark-blue rounded-t-2xl p-3 shadow-lg border border-hero-dark-blue border-b-0 mx-8">
-                <h3 className="text-lg font-bold text-hero-white text-center">
-                  {service.title}
-                </h3>
-              </div>
-              <div
-                className="relative h-48 rounded-2xl shadow-lg border border-gray-200 hover:shadow-2xl hover:border-blue-300 hover:-translate-y-1 transition-all duration-200 overflow-hidden"
-              >
-                <Image
-                  src={index === 0 ? '/images/projects/části haly Tehovec/5.webp' : 
-                       index === 1 ? '/images/projects/klimatizace - Toušice/1.webp' : 
-                       '/images/projects/Demontáž a zpětná/2.webp'}
-                  alt={service.title}
-                  fill
-                  className="object-cover -z-10"
-                  sizes="300px"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent -z-10"></div>
-                <div className="absolute inset-0 flex items-center justify-center z-10 p-8">
-                  <div className={`w-16 h-16 ${service.iconBg} rounded-xl flex items-center justify-center transition-transform duration-200 hover:scale-110`}>
-                    <service.icon className={`w-8 h-8 ${service.iconColor}`} />
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-
-          {/* Druhá řada - Zabezpečení */}
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-            className="relative"
-          >
-            <div className="bg-hero-dark-blue rounded-t-2xl p-3 shadow-lg border border-hero-dark-blue border-b-0 mx-8">
-              <h3 className="text-lg font-bold text-hero-white text-center">
-                {services[3].title}
-              </h3>
-            </div>
-            <div
-              className="relative p-8 h-48 rounded-2xl shadow-lg border border-gray-200 hover:shadow-2xl hover:border-blue-300 hover:-translate-y-1 transition-all duration-200 overflow-hidden"
-              style={{ backgroundImage: 'url(/images/services/kamery.webp)', backgroundSize: 'cover', backgroundPosition: 'center' }}
-            >
+              <Image
+                src={index === 0 ? '/images/projects/části haly Tehovec/5.webp' : 
+                     index === 1 ? '/images/projects/klimatizace - Toušice/1.webp' : 
+                     '/images/projects/Demontáž a zpětná/2.webp'}
+                alt={service.title}
+                fill
+                className="object-cover"
+                sizes="300px"
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-              <div className={`absolute inset-0 flex items-center justify-center z-10`}>
-                <div className={`w-16 h-16 ${services[3].iconBg} rounded-xl flex items-center justify-center transition-transform duration-200 hover:scale-110`}>
-                  <VideoCameraIcon className={`w-8 h-8 ${services[3].iconColor}`} />
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Třetí řada - Hromosvody + Revize */}
-          {services.slice(4, 6).map((service, index) => (
-            <motion.div
-              key={index + 4}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: (index + 4) * 0.1, duration: 0.6 }}
-              className="relative"
-            >
-              <div className="bg-hero-dark-blue rounded-t-2xl p-3 shadow-lg border border-hero-dark-blue border-b-0 mx-8">
-                <h3 className="text-lg font-bold text-hero-white text-center">
-                  {service.title}
-                </h3>
-              </div>
-              <div
-                className="relative h-48 rounded-2xl shadow-lg border border-gray-200 hover:shadow-2xl hover:border-blue-300 hover:-translate-y-1 transition-all duration-200 overflow-hidden"
-              >
-                <Image
-                  src={index === 0 ? '/images/projects/hromosvodu údolí čerpadel/1.webp' : '/images/projects/budova bývalé banky/1.webp'}
-                  alt={service.title}
-                  fill
-                  className="object-cover -z-10"
-                  sizes="300px"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent -z-10"></div>
-                <div className="absolute inset-0 flex items-center justify-center z-10 p-8">
-                  <div className={`w-16 h-16 ${service.iconBg} rounded-xl flex items-center justify-center transition-transform duration-200 hover:scale-110`}>
-                    <service.icon className={`w-8 h-8 ${service.iconColor}`} />
-                  </div>
+              <div className="absolute inset-0 flex items-center justify-center z-10 p-8">
+                <div className={`w-16 h-16 ${service.iconBg} rounded-xl flex items-center justify-center transition-transform duration-200 hover:scale-110`}>
+                  <service.icon className={`w-8 h-8 ${service.iconColor}`} />
                 </div>
               </div>
             </motion.div>
           ))}
-
-          {/* Pohotovost - zabere 2 sloupce */}
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.6, duration: 0.6 }}
-            className="md:col-span-2 bg-hero-dark-blue p-8 rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-hero-dark-blue/20"
-          >
-            <div className="w-16 h-16 bg-hero-yellow/20 rounded-xl flex items-center justify-center mb-6 mx-auto hover:scale-110 transition-transform duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-8 h-8 text-hero-yellow">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
-              </svg>
-            </div>
-            <h3 className="text-2xl font-bold text-hero-white text-center">Elektro pohotovost 24/7</h3>
-          </motion.div>
-
-          {/* Tlačítko Více informací - na původní pozici pod pohotovostí */}
-          <motion.a
-            href="/sluzby"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.7, duration: 0.6 }}
-            className="flex items-center justify-center gap-3 group cursor-pointer"
-          >
-            <span className="text-2xl font-bold bg-gradient-to-r from-black via-gray-800 via-gray-400 via-gray-800 to-black bg-clip-text text-transparent bg-[length:300%_auto] animate-gradient">
-              Více informací
-            </span>
-            <ArrowRightIcon className="w-7 h-7 text-blue-600 group-hover:translate-x-2 group-hover:text-electric-500 transition-all duration-200 stroke-[3]" />
-          </motion.a>
         </div>
 
         {/* Mobile Services - 3 řádky po 2 službách */}

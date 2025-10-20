@@ -55,10 +55,10 @@ export default function Contact() {
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Contact Form - na mobilu NAHOŘE, na desktopu vpravo */}
           <motion.div
-            initial={isMobile ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
-            whileInView={isMobile ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }}
+            initial={isMobile ? { opacity: 0 } : { opacity: 0, x: 50 }}
+            whileInView={isMobile ? { opacity: 1 } : { opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={isMobile ? { duration: 0 } : { duration: 0.8 }}
+            transition={isMobile ? { duration: 0.3 } : { duration: 0.8 }}
             className="bg-white p-6 sm:p-8 rounded-2xl shadow-xl order-first lg:order-last"
           >
             <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6">
@@ -144,19 +144,19 @@ export default function Contact() {
 
           {/* Contact Info - na mobilu DOLE, na desktopu vlevo */}
           <motion.div
-            initial={isMobile ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-            whileInView={isMobile ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }}
+            initial={isMobile ? { opacity: 0 } : { opacity: 0, x: -50 }}
+            whileInView={isMobile ? { opacity: 1 } : { opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={isMobile ? { duration: 0 } : { duration: 0.8 }}
+            transition={isMobile ? { duration: 0.3 } : { duration: 0.8 }}
             className="space-y-4 sm:space-y-6 order-last lg:order-first"
           >
             {contactInfo.map((info, index) => (
               <motion.div
                 key={index}
-                initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+                initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
+                whileInView={isMobile ? { opacity: 1 } : { opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={isMobile ? { duration: 0 } : { delay: index * 0.1, duration: 0.6 }}
+                transition={isMobile ? { duration: 0.3 } : { delay: index * 0.1, duration: 0.6 }}
                 className="bg-white rounded-2xl shadow-lg overflow-hidden"
               >
                 {info.title === 'Adresa' ? (
@@ -293,10 +293,10 @@ export default function Contact() {
 
             {/* 24/7 Emergency Banner - menší na mobilu */}
             <motion.div
-              initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+              initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
+              whileInView={isMobile ? { opacity: 1 } : { opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={isMobile ? { duration: 0 } : { delay: 0.4, duration: 0.6 }}
+              transition={isMobile ? { duration: 0.3 } : { delay: 0.4, duration: 0.6 }}
               className="p-4 sm:p-8 bg-gradient-to-r from-electric-500 to-electric-600 rounded-2xl text-white shadow-xl"
             >
               <ClockIcon className="w-8 h-8 sm:w-12 sm:h-12 mb-2 sm:mb-4" />

@@ -53,7 +53,7 @@ export default function References() {
           initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={isMobile ? { duration: 0 } : { duration: 0.6 }}
+          transition={isMobile ? { duration: 0.3 } : { duration: 0.6 }}
           className="text-center mb-0"
         >
           {/* Bílé okénko s nadpisem - menší na mobilu */}
@@ -63,17 +63,17 @@ export default function References() {
             </h2>
           </div>
 
-          {/* Logo Loop container s profesionální animací - původní velikost okna */}
-          <div className="bg-gradient-to-r from-[#0B1D36] to-[#FFC52E] rounded-b-3xl sm:rounded-3xl py-4 sm:py-12 md:py-16 text-white flex items-center justify-center overflow-hidden shadow-lg border border-[#0B1D36]/20 mx-auto w-full">
-            <div className="w-full flex items-center justify-center" style={{ minHeight: '140px', position: 'relative', overflow: 'hidden' }}>
+          {/* Logo Loop container s profesionální animací - optimalizováno pro mobil */}
+          <div className="bg-gradient-to-r from-[#0B1D36] to-[#FFC52E] rounded-b-3xl sm:rounded-3xl py-6 sm:py-12 md:py-16 text-white flex items-center justify-center overflow-hidden shadow-lg border border-[#0B1D36]/20 mx-auto w-full">
+            <div className="w-full flex items-center justify-center" style={{ minHeight: '160px', position: 'relative', overflow: 'hidden' }}>
               <LogoLoop
                 logos={partnerLogos}
-                speed={80}
+                speed={60}
                 direction="left"
-                logoHeight={120}
-                gap={100}
-                pauseOnHover={true}
-                scaleOnHover={true}
+                logoHeight={isMobile ? 80 : 120}
+                gap={isMobile ? 40 : 100}
+                pauseOnHover={!isMobile}
+                scaleOnHover={!isMobile}
                 ariaLabel="Naši partneři"
               />
             </div>

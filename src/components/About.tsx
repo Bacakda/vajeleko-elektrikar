@@ -81,10 +81,10 @@ export default function About() {
           {features.map((feature, index) => (
             <motion.div
               key={index}
-              initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+              initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
+              whileInView={isMobile ? { opacity: 1 } : { opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={isMobile ? { duration: 0 } : { delay: index * 0.1, duration: 0.6 }}
+              transition={isMobile ? { duration: 0.3 } : { delay: index * 0.1, duration: 0.6 }}
               className="text-center p-4 sm:p-6 border border-hero-dark-blue rounded-xl hover:shadow-xl transition-all backdrop-blur-sm bg-white/80 lg:col-span-1"
             >
               <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-hero-dark-blue/10 to-hero-yellow/10 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 transition-transform duration-200 hover:scale-110">

@@ -78,15 +78,16 @@ export default function ProjectsPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="pt-24 pb-16 sm:pt-32">
+      <section className="pt-32 pb-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
+            whileInView={isMobile ? { opacity: 1 } : { opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={isMobile ? { duration: 0.3 } : { duration: 0.6 }}
             className="text-center max-w-4xl mx-auto"
           >
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-4 sm:mb-6">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6">
               Naše <span className="gradient-text">projekty</span>
             </h1>
             <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
@@ -103,10 +104,10 @@ export default function ProjectsPage() {
             {projects.map((project, index) => (
               <motion.div
                 key={project.id}
-                initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+                initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 30 }}
+                whileInView={isMobile ? { opacity: 1 } : { opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={isMobile ? { duration: 0 } : { delay: index * 0.1, duration: 0.6 }}
+                transition={isMobile ? { duration: 0.3 } : { delay: index * 0.1, duration: 0.6 }}
                 whileHover={{ y: -5, scale: 1.01 }}
                 onClick={() => openModal(project)}
                 className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 relative cursor-pointer"
