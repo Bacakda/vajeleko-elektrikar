@@ -1,5 +1,5 @@
-# VaJeleko s.r.o - Professional SEO Robots Configuration
-# Elektroinstalační služby - Praha a okolí
+# VaJeleko s.r.o - AGGRESSIVE SEO Robots Configuration
+# Elektrikář Praha 24/7 - Elektroinstalace Nonstop - Maximální SEO Dominance
 
 User-agent: *
 Allow: /
@@ -9,37 +9,78 @@ Disallow: /private/
 Disallow: /admin/
 Disallow: /*.json$
 Disallow: /_vercel/
+Disallow: /test/
+Disallow: /dev/
 
-# Allow important files
+# Allow ALL important content for maximum SEO
 Allow: /favicon.ico
 Allow: /robots.txt
 Allow: /sitemap.xml
 Allow: /manifest.json
+Allow: /images/
+Allow: /fonts/
+Allow: /css/
+Allow: /js/
 
-# Crawl delay for general bots
-Crawl-delay: 1
+# AGGRESSIVE crawling - no delays for search engines
+Crawl-delay: 0
 
-# Sitemaps
+# Multiple sitemaps for maximum coverage
 Sitemap: https://vajeleko.cz/sitemap.xml
+Sitemap: https://vajeleko.cz/sitemap-index.xml
 
-# Google Search Console optimization
+# Google Search Console - MAXIMUM PRIORITY
 User-agent: Googlebot
 Allow: /
 Crawl-delay: 0
 Allow: /images/
 Allow: /fonts/
+Allow: /css/
+Allow: /js/
+Allow: /elektrikar-praha*
+Allow: /elektro-pohotovost*
+Allow: /elektrikar-24-7*
+Allow: /elektrikar-nonstop*
+Allow: /havarijni-elektrikar*
+Allow: /elektrikar-vikend*
+Allow: /elektrikar-svatek*
+Allow: /sluzby/elektroinstalace*
+Allow: /sluzby/revize*
+Allow: /sluzby/fotovoltaika*
+Allow: /sluzby/hromosvody*
 
-# Bing optimization
+# Bing - MAXIMUM PRIORITY
 User-agent: Bingbot
 Allow: /
-Crawl-delay: 1
+Crawl-delay: 0
+Allow: /images/
+Allow: /fonts/
+Allow: /css/
+Allow: /js/
 
-# Yandex optimization
+# Yandex - MAXIMUM PRIORITY  
 User-agent: YandexBot
 Allow: /
-Crawl-delay: 1
+Crawl-delay: 0
+Allow: /images/
+Allow: /fonts/
 
-# Block unwanted bots
+# DuckDuckGo - MAXIMUM PRIORITY
+User-agent: DuckDuckBot
+Allow: /
+Crawl-delay: 0
+
+# Seznam.cz - MAXIMUM PRIORITY
+User-agent: SeznamBot
+Allow: /
+Crawl-delay: 0
+
+# Baidu - MAXIMUM PRIORITY
+User-agent: Baiduspider
+Allow: /
+Crawl-delay: 0
+
+# Block ONLY competitive analysis bots
 User-agent: AhrefsBot
 Disallow: /
 
@@ -48,3 +89,13 @@ Disallow: /
 
 User-agent: MJ12bot
 Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+# Allow all other legitimate bots
+User-agent: *
+Allow: /
