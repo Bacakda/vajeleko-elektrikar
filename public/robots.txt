@@ -1,22 +1,50 @@
-# VaJeleko s.r.o - Robots configuration
+# VaJeleko s.r.o - Professional SEO Robots Configuration
+# Elektroinstalační služby - Praha a okolí
+
 User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /_next/
 Disallow: /private/
+Disallow: /admin/
+Disallow: /*.json$
+Disallow: /_vercel/
 
-# Crawl delay
-Crawl-delay: 0.5
+# Allow important files
+Allow: /favicon.ico
+Allow: /robots.txt
+Allow: /sitemap.xml
+Allow: /manifest.json
+
+# Crawl delay for general bots
+Crawl-delay: 1
 
 # Sitemaps
 Sitemap: https://vajeleko.cz/sitemap.xml
 
-# Specific rules for Google
+# Google Search Console optimization
 User-agent: Googlebot
 Allow: /
 Crawl-delay: 0
+Allow: /images/
+Allow: /fonts/
 
-# Specific rules for Bing
+# Bing optimization
 User-agent: Bingbot
 Allow: /
 Crawl-delay: 1
+
+# Yandex optimization
+User-agent: YandexBot
+Allow: /
+Crawl-delay: 1
+
+# Block unwanted bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /

@@ -1,0 +1,68 @@
+{
+  "name": "VaJeleko s.r.o - Elektroinstalační služby",
+  "short_name": "VaJeleko",
+  "description": "Profesionální elektroinstalační služby v Praze a okolí. Montáž, opravy, revize elektroinstalací.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1e40af",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "cs",
+  "dir": "ltr",
+  "categories": ["business", "utilities", "productivity"],
+  "icons": [
+    {
+      "src": "/images/logos/logo-header.webp",
+      "sizes": "192x192",
+      "type": "image/webp",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/logos/logo-header.webp",
+      "sizes": "512x512",
+      "type": "image/webp",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/logos/logo-header.webp",
+      "sizes": "192x192",
+      "type": "image/webp",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/images/logos/logo-hero.webp",
+      "sizes": "1280x720",
+      "type": "image/webp",
+      "form_factor": "wide"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Kontakt",
+      "short_name": "Kontakt",
+      "description": "Rychlý kontakt s VaJeleko",
+      "url": "/kontakt",
+      "icons": [
+        {
+          "src": "/images/logos/logo-header.webp",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Služby",
+      "short_name": "Služby",
+      "description": "Naše elektroinstalační služby",
+      "url": "/sluzby",
+      "icons": [
+        {
+          "src": "/images/logos/logo-header.webp",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ]
+}
