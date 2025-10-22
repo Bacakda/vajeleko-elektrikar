@@ -169,6 +169,16 @@
     animation: none !important;
   }
 
+  /* Vypnout všechny scroll animace na mobilu */
+  .animate-slide-in-right,
+  .animate-slide-in-left,
+  .animate-fade-in,
+  .animate-scale-in {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
   /* Zjednodušit hover efekty */
   .hover-lift:hover {
     transform: translateY(-4px) translateZ(0) !important;
@@ -184,5 +194,63 @@
   .transition-slow {
     transition-duration: 0.15s !important;
   }
+
+  /* Vypnout všechny framer-motion animace na mobilu */
+  [data-framer-motion] {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* Touch zařízení - úplně vypnout animace */
+@media (hover: none) and (pointer: coarse) {
+  .animate-float,
+  .animate-pulse-slow,
+  .animate-slide-in-right,
+  .animate-slide-in-left,
+  .animate-fade-in,
+  .animate-scale-in,
+  .animate-rotate {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .hover-lift,
+  .hover-scale {
+    transition: none !important;
+  }
+
+  .hover-lift:hover,
+  .hover-scale:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+}
+
+/* Úplné vypnutí animací na mobilu pomocí CSS třídy */
+.disable-animations * {
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+  opacity: 1 !important;
+}
+
+.disable-animations [data-framer-motion] {
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+  opacity: 1 !important;
+}
+
+/* Vypnout všechny framer-motion animace na mobilu */
+.disable-animations .motion-div,
+.disable-animations [style*="transform"],
+.disable-animations [style*="opacity"] {
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+  opacity: 1 !important;
 }
 

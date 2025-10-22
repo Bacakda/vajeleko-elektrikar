@@ -2,7 +2,8 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import React, { useState, useEffect } from 'react'
+import React from 'react'
+import { useMobileOptimization } from '@/hooks/useMobileOptimization'
 import {
   BoltIcon,
   FireIcon,
@@ -48,10 +49,10 @@ function MobileServiceCards({ services, isMobile }: { services: ServiceItem[], i
           {row.map((service, serviceIndex) => (
             <motion.div
               key={serviceIndex}
-              initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
-              whileInView={isMobile ? { opacity: 1 } : { opacity: 1, y: 0 }}
+              initial={isMobile ? undefined : { opacity: 0, y: 20 }}
+              whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={isMobile ? { duration: 0.3 } : { delay: (rowIndex * 2 + serviceIndex) * 0.1, duration: 0.6 }}
+              transition={isMobile ? undefined : { delay: (rowIndex * 2 + serviceIndex) * 0.1, duration: 0.6 }}
               className="w-full"
             >
               {/* Kompletní karta: fixní výška pro konzistentní layout */}
@@ -125,16 +126,7 @@ function MobileServiceCards({ services, isMobile }: { services: ServiceItem[], i
 }
 
 export default function Services() {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const updateSize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    updateSize(); // Set initial value
-    window.addEventListener('resize', updateSize);
-    return () => window.removeEventListener('resize', updateSize);
-  }, []);
+  const { isMobile } = useMobileOptimization();
 
   const services = [
     {
@@ -208,10 +200,10 @@ export default function Services() {
           {services.map((service, index) => (
             <motion.div
               key={index}
-              initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
-              whileInView={isMobile ? { opacity: 1 } : { opacity: 1, y: 0 }}
+              initial={isMobile ? undefined : { opacity: 0, y: 20 }}
+              whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={isMobile ? { duration: 0.3 } : { delay: index * 0.1, duration: 0.6 }}
+              transition={isMobile ? undefined : { delay: index * 0.1, duration: 0.6 }}
               className="bg-white rounded-2xl shadow-lg border border-gray-200 hover:shadow-2xl hover:border-blue-300 hover:-translate-y-1 transition-all duration-200 overflow-hidden"
             >
               {/* Textové okenko */}

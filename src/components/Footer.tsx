@@ -104,10 +104,10 @@ export default function Footer() {
             
             {/* Quick Links */}
             <motion.div
-              initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
-              whileInView={isMobile ? { opacity: 1 } : { opacity: 1, y: 0 }}
+              initial={isMobile ? undefined : { opacity: 0, y: 20 }}
+              whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={isMobile ? { duration: 0.3 } : { delay: 0.1, duration: 0.6 }}
+              transition={isMobile ? undefined : { delay: 0.1, duration: 0.6 }}
             >
               <h4 className="text-sm font-semibold text-gray-300 mb-4 border-b border-gray-700 pb-2">Rychlé odkazy</h4>
               <ul className="space-y-2 text-sm">
@@ -126,10 +126,10 @@ export default function Footer() {
 
             {/* Services */}
             <motion.div
-              initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
-              whileInView={isMobile ? { opacity: 1 } : { opacity: 1, y: 0 }}
+              initial={isMobile ? undefined : { opacity: 0, y: 20 }}
+              whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={isMobile ? { duration: 0.3 } : { delay: 0.2, duration: 0.6 }}
+              transition={isMobile ? undefined : { delay: 0.2, duration: 0.6 }}
             >
               <h4 className="text-sm font-semibold text-gray-300 mb-4 border-b border-gray-700 pb-2">Naše služby</h4>
               <ul className="space-y-2 text-sm">
