@@ -23,6 +23,21 @@ export const metadata: Metadata = {
   description: 'Elektrikář Praha 24/7 - elektroinstalace, elektro pohotovost, revize, fotovoltaika, hromosvody. Nejlepší elektrikář v Praze a Středočeském kraji. Rychlý výjezd, kvalitní práce. Volejte +420 722 914 120.',
   keywords: 'elektrikář praha, elektrikář 24/7, elektroinstalace praha, elektro pohotovost, elektrikář nonstop, elektrikář stredocesky kraj, elektrikář kladno, elektrikář mlada boleslav, elektrikář kolin, elektrikář praha 1, elektrikář praha 2, elektrikář praha 3, elektrikář praha 4, elektrikář praha 5, elektrikář praha 6, elektrikář praha 7, elektrikář praha 8, elektrikář praha 9, elektrikář praha 10, havarijni elektrikar, elektrikar vikend, elektrikar svatek, elektrikar 24 hodin, elektrikar nonstop, elektroinstalace, revize elektroinstalace, fotovoltaika, hromosvody, tepelná čerpadla, kamerové systémy, zabezpečení, elektromontáž, elektro opravy, elektro servis, elektroinstalace byt, elektroinstalace dům, elektroinstalace kancelář, elektroinstalace sklad, elektroinstalace hala, elektroinstalace škola, elektroinstalace nemocnice, elektroinstalace hotel, elektroinstalace restaurace, elektroinstalace obchod, elektroinstalace továrna, elektroinstalace výrobní hala, elektroinstalace administrativní budova, elektroinstalace bytový dům, elektroinstalace rodinný dům, elektroinstalace chaty, elektroinstalace chalupy, elektroinstalace garáže, elektroinstalace sklep, elektroinstalace půda, elektroinstalace koupelna, elektroinstalace kuchyň, elektroinstalace obývací pokoj, elektroinstalace ložnice, elektroinstalace dětský pokoj, elektroinstalace pracovna, elektroinstalace chodba, elektroinstalace schodiště, elektroinstalace balkon, elektroinstalace terasa, elektroinstalace zahrada, elektroinstalace bazén, elektroinstalace sauna, elektroinstalace wellness, elektroinstalace fitness, elektroinstalace posilovna, elektroinstalace tělocvična, elektroinstalace sportovní hala, elektroinstalace kulturní dům, elektroinstalace divadlo, elektroinstalace kino, elektroinstalace muzeum, elektroinstalace knihovna, elektroinstalace pošta, elektroinstalace banka, elektroinstalace pojišťovna, elektroinstalace úřad, elektroinstalace radnice, elektroinstalace soud, elektroinstalace věznice, elektroinstalace policejní stanice, elektroinstalace hasičská stanice, elektroinstalace záchranná služba, elektroinstalace nemocnice, elektroinstalace poliklinika, elektroinstalace ordinace, elektroinstalace lékárna, elektroinstalace laboratoř, elektroinstalace rentgen, elektroinstalace CT, elektroinstalace MRI, elektroinstalace ultrazvuk, elektroinstalace EKG, elektroinstalace EEG, elektroinstalace operace, elektroinstalace sál, elektroinstalace JIP, elektroinstalace ARO, elektroinstalace jednotka intenzivní péče, elektroinstalace anesteziologie, elektroinstalace chirurgie, elektroinstalace interní, elektroinstalace pediatrie, elektroinstalace gynekologie, elektroinstalace porodnice, elektroinstalace neonatologie, elektroinstalace psychiatrie, elektroinstalace neurologie, elektroinstalace kardiologie, elektroinstalace pneumologie, elektroinstalace gastroenterologie, elektroinstalace urologie, elektroinstalace ortopedie, elektroinstalace traumatologie, elektroinstalace oční, elektroinstalace ORL, elektroinstalace stomatologie, elektroinstalace dermatologie, elektroinstalace alergologie, elektroinstalace imunologie, elektroinstalace endokrinologie, elektroinstalace diabetologie, elektroinstalace onkologie, elektroinstalace hematologie, elektroinstalace nefrologie, elektroinstalace revmatologie, elektroinstalace rehabilitace, elektroinstalace fyzioterapie, elektroinstalace ergoterapie, elektroinstalace logopedie, elektroinstalace psychologie, elektroinstalace sociální práce, elektroinstalace nutriční poradenství, elektroinstalace lékárna, elektroinstalace laboratoř, elektroinstalace rentgen, elektroinstalace CT, elektroinstalace MRI, elektroinstalace ultrazvuk, elektroinstalace EKG, elektroinstalace EEG, elektroinstalace operace, elektroinstalace sál, elektroinstalace JIP, elektroinstalace ARO, elektroinstalace jednotka intenzivní péče, elektroinstalace anesteziologie, elektroinstalace chirurgie, elektroinstalace interní, elektroinstalace pediatrie, elektroinstalace gynekologie, elektroinstalace porodnice, elektroinstalace neonatologie, elektroinstalace psychiatrie, elektroinstalace neurologie, elektroinstalace kardiologie, elektroinstalace pneumologie, elektroinstalace gastroenterologie, elektroinstalace urologie, elektroinstalace ortopedie, elektroinstalace traumatologie, elektroinstalace oční, elektroinstalace ORL, elektroinstalace stomatologie, elektroinstalace dermatologie, elektroinstalace alergologie, elektroinstalace imunologie, elektroinstalace endokrinologie, elektroinstalace diabetologie, elektroinstalace onkologie, elektroinstalace hematologie, elektroinstalace nefrologie, elektroinstalace revmatologie, elektroinstalace rehabilitace, elektroinstalace fyzioterapie, elektroinstalace ergoterapie, elektroinstalace logopedie, elektroinstalace psychologie, elektroinstalace sociální práce, elektroinstalace nutriční poradenství',
   applicationName: 'VaJeleko s.r.o',
+  icons: {
+    icon: [
+      { url: '/favicon/favicon.ico', sizes: 'any' },
+      { url: '/favicon/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon/favicon-96x96.png', sizes: '96x96', type: 'image/png' }
+    ],
+    apple: [
+      { url: '/favicon/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+      { url: '/favicon/web-app-manifest-192x192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/favicon/web-app-manifest-512x512.png', sizes: '512x512', type: 'image/png' }
+    ],
+    other: [
+      { rel: 'mask-icon', url: '/favicon/favicon.svg', color: '#1e40af' }
+    ]
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
@@ -76,8 +91,18 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         
+        {/* Favicons - Kompletní sada pro všechny platformy */}
+        <link rel="icon" href="/favicon/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon/favicon.svg" type="image/svg+xml" />
+        <link rel="icon" href="/favicon/favicon-96x96.png" type="image/png" sizes="96x96" />
+        
+        {/* Apple Touch Icons */}
+        <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png" />
+        <link rel="apple-touch-icon" sizes="192x192" href="/favicon/web-app-manifest-192x192.png" />
+        <link rel="apple-touch-icon" sizes="512x512" href="/favicon/web-app-manifest-512x512.png" />
+        
         {/* PWA Manifest */}
-        <link rel="manifest" href="/manifest.json" />
+        <link rel="manifest" href="/favicon/site.webmanifest" />
         <meta name="theme-color" content="#1e40af" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
