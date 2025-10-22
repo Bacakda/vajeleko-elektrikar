@@ -272,7 +272,7 @@ export const breadcrumbStructuredData = (items: Array<{name: string, url: string
   }))
 });
 
-export const projectStructuredData = (project: any) => ({
+export const projectStructuredData = (project: {id: string, title: string, description: string, images: string[], category: string, location: string}) => ({
   "@context": "https://schema.org",
   "@type": "CreativeWork",
   "name": project.title,

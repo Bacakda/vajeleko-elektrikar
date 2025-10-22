@@ -52,8 +52,7 @@ const isNodeItem = (item: LogoItem): item is Extract<LogoItem, { node: React.Rea
 
 const useResizeObserver = (
   callback: () => void,
-  elements: Array<React.RefObject<Element | null>>,
-  dependencies: React.DependencyList
+  elements: Array<React.RefObject<Element | null>>
 ) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
@@ -76,13 +75,12 @@ const useResizeObserver = (
     return () => {
       observers.forEach(observer => observer?.disconnect());
     };
-  }, dependencies);
+  }, [callback, elements]);
 };
 
 const useImageLoader = (
   seqRef: React.RefObject<HTMLUListElement | null>,
-  onLoad: () => void,
-  dependencies: React.DependencyList
+  onLoad: () => void
 ) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
@@ -117,7 +115,7 @@ const useImageLoader = (
         img.removeEventListener('error', handleImageLoad);
       });
     };
-  }, dependencies);
+  }, [onLoad, seqRef]);
 };
 
 const useAnimationLoop = (
@@ -188,7 +186,7 @@ const useAnimationLoop = (
       }
       lastTimestampRef.current = null;
     };
-  }, [targetVelocity, seqWidth, isHovered, pauseOnHover]);
+  }, [targetVelocity, seqWidth, isHovered, pauseOnHover, trackRef]);
 };
 
 export const LogoLoop = React.memo<LogoLoopProps>(
@@ -246,9 +244,9 @@ export const LogoLoop = React.memo<LogoLoopProps>(
       }
     }, []);
 
-    useResizeObserver(updateDimensions, [containerRef, seqRef], [logos, gap, logoHeight]);
+    useResizeObserver(updateDimensions, [containerRef, seqRef]);
 
-    useImageLoader(seqRef, updateDimensions, [logos, gap, logoHeight]);
+    useImageLoader(seqRef, updateDimensions);
 
     // Pause efekt pouze na desktopu (ne na mobilu)
     const effectivePauseOnHover = pauseOnHover && !isMobile;

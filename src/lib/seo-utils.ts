@@ -74,7 +74,7 @@ export const generateBreadcrumbStructuredData = (items: Array<{name: string, url
   }))
 })
 
-export const generateProjectStructuredData = (project: any) => ({
+export const generateProjectStructuredData = (project: {id: string, title: string, description: string, images: string[], category: string, location: string}) => ({
   "@context": "https://schema.org",
   "@type": "CreativeWork",
   "name": project.title,
