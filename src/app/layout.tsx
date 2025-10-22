@@ -25,17 +25,17 @@ export const metadata: Metadata = {
   applicationName: 'VaJeleko s.r.o',
   icons: {
     icon: [
-      { url: '/favicon/favicon.ico', sizes: 'any' },
-      { url: '/favicon/favicon.svg', type: 'image/svg+xml' },
-      { url: '/favicon/favicon-96x96.png', sizes: '96x96', type: 'image/png' }
+      { url: '/favicon/favicon.ico?v=2', sizes: 'any' },
+      { url: '/favicon/favicon.svg?v=2', type: 'image/svg+xml' },
+      { url: '/favicon/favicon-96x96.png?v=2', sizes: '96x96', type: 'image/png' }
     ],
     apple: [
-      { url: '/favicon/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
-      { url: '/favicon/web-app-manifest-192x192.png', sizes: '192x192', type: 'image/png' },
-      { url: '/favicon/web-app-manifest-512x512.png', sizes: '512x512', type: 'image/png' }
+      { url: '/favicon/apple-touch-icon.png?v=2', sizes: '180x180', type: 'image/png' },
+      { url: '/favicon/web-app-manifest-192x192.png?v=2', sizes: '192x192', type: 'image/png' },
+      { url: '/favicon/web-app-manifest-512x512.png?v=2', sizes: '512x512', type: 'image/png' }
     ],
     other: [
-      { rel: 'mask-icon', url: '/favicon/favicon.svg', color: '#1e40af' }
+      { rel: 'mask-icon', url: '/favicon/favicon.svg?v=2', color: '#1e40af' }
     ]
   },
   appleWebApp: {
@@ -96,10 +96,14 @@ export default function RootLayout({
         <link rel="icon" href="/favicon/favicon.svg" type="image/svg+xml" />
         <link rel="icon" href="/favicon/favicon-96x96.png" type="image/png" sizes="96x96" />
         
+        {/* Force refresh favicons */}
+        <link rel="icon" href="/favicon/favicon.ico?v=2" sizes="any" />
+        <link rel="icon" href="/favicon/favicon.svg?v=2" type="image/svg+xml" />
+        
         {/* Apple Touch Icons */}
-        <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png" />
-        <link rel="apple-touch-icon" sizes="192x192" href="/favicon/web-app-manifest-192x192.png" />
-        <link rel="apple-touch-icon" sizes="512x512" href="/favicon/web-app-manifest-512x512.png" />
+        <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png?v=2" />
+        <link rel="apple-touch-icon" sizes="192x192" href="/favicon/web-app-manifest-192x192.png?v=2" />
+        <link rel="apple-touch-icon" sizes="512x512" href="/favicon/web-app-manifest-512x512.png?v=2" />
         
         {/* PWA Manifest */}
         <link rel="manifest" href="/favicon/site.webmanifest" />

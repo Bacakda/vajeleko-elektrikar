@@ -26,6 +26,9 @@ export default function Header() {
       }
     }
     
+    // Inicializace scroll stavu
+    handleScroll()
+    
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [mobileMenuOpen])
@@ -41,9 +44,14 @@ export default function Header() {
   // Na službách a jiných stránkách (ne na hlavní) je header vždy tmavý
   const isMainPage = pathname === '/'
   const useWhiteText = isMainPage && !isScrolled
+  
+  // Reset scroll stavu při změně stránky
+  useEffect(() => {
+    setIsScrolled(false)
+  }, [pathname])
 
   // Logo podle stránky - SPRÁVNÁ CESTA S DIAKRITIKOU
-  const logoSrc = isMainPage && !isScrolled ? '/images/logos/logo-header-svetlé.webp' : '/images/logos/logo-header.webp'
+  const logoSrc = isMainPage && !isScrolled ? '/valejeko-logo.png' : '/images/logos/logo-header.webp'
 
   return (
     <>
@@ -75,7 +83,7 @@ export default function Header() {
         <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo */}
-            <Link href="/" className="flex-shrink-0">
+            <Link href="/" className={`flex-shrink-0 ${isMainPage && !isScrolled ? 'flex items-start pt-16' : 'flex items-center'}`}>
               <Image
                 src={logoSrc}
                 alt="VaJeLekO Logo"
@@ -83,7 +91,7 @@ export default function Header() {
                 height={0}
                 sizes="(max-width: 768px) 100vw, 33vw"
                 style={{
-                  height: '64px',
+                  height: isMainPage && !isScrolled ? '120px' : '60px',
                   width: 'auto'
                 }}
                 priority
@@ -168,10 +176,15 @@ export default function Header() {
           <div className="p-6 border-b flex justify-between items-center border-gray-200 bg-white/95 flex-shrink-0">
             <div className="flex items-center">
               <Image
-                src="/images/logos/logo-header.webp"
+                src="/valejeko-logo.png"
                 alt="VaJeLekO Logo"
-                width={56}
-                height={56}
+                width={0}
+                height={0}
+                sizes="100vw"
+                style={{
+                  height: '70px',
+                  width: 'auto'
+                }}
                 className="object-contain rounded"
               />
             </div>
