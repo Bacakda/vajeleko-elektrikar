@@ -73,13 +73,19 @@ export default function Header() {
       
       {/* HLAVNÍ HEADER - SCHOVÁVAT NA MOBILU PŘI OTEVŘENÉM MENU */}
       <header className={`
-        fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out
+        fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ease-in-out
         ${isMobileScreen && mobileMenuOpen ? '-translate-y-full opacity-0' : ''}
         ${isScrolled 
           ? 'bg-white/95 backdrop-blur-md shadow-lg' 
           : 'bg-transparent'
         }
-      `}>
+      `} style={{ 
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 50
+      }}>
         <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo */}
@@ -161,14 +167,14 @@ export default function Header() {
       {/* MOBILNÍ SIDEBAR - PLYNULÁ ANIMACE */}
       <div
         className={`
-          fixed inset-0 z-50 pointer-events-none lg:hidden
+          fixed inset-0 z-[60] pointer-events-none lg:hidden
           ${mobileMenuOpen ? 'pointer-events-auto' : ''}
         `}
       >
         <div 
           className={`
             fixed top-0 right-0 h-screen w-80 bg-white/95 backdrop-blur-xl border-l-2 border-gray-200 shadow-2xl
-            transform transition-all duration-300 ease-out rounded-l-3xl flex flex-col
+            transform transition-all duration-300 ease-out rounded-l-3xl flex flex-col z-[70]
             ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}
           `}
         >

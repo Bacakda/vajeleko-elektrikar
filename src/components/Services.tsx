@@ -74,6 +74,7 @@ function MobileServiceCards({ services, isMobile }: { services: ServiceItem[], i
                     fill
                     className="object-cover"
                     sizes="(max-width: 768px) 150px, 200px"
+                    priority={serviceIndex < 4}
                   />
                   {/* Gradient overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
@@ -279,7 +280,7 @@ export default function Services() {
         </div>
 
         {/* Mobile Services - 3 řádky po 2 službách */}
-        <div className="md:hidden space-y-6 mt-0 -mt-3">
+        <div className="block md:hidden space-y-6 mt-0 -mt-3">
           <MobileServiceCards services={services} isMobile={isMobile} />
         </div>
       </div>
