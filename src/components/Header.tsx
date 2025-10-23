@@ -19,11 +19,6 @@ export default function Header() {
     const handleScroll = () => {
       const scrolled = window.scrollY > 50
       setIsScrolled(scrolled)
-      
-      // UZAVŘÍT MENU PŘI SCROLLU - SIDEBAR ZŮSTANE FIXED
-      if (scrolled && mobileMenuOpen) {
-        setMobileMenuOpen(false)
-      }
     }
     
     // Inicializace scroll stavu
@@ -31,7 +26,7 @@ export default function Header() {
     
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [mobileMenuOpen])
+  }, [])
 
   const navLinks = [
     { name: 'Domů', href: '/' },
@@ -71,10 +66,9 @@ export default function Header() {
         />
       )}
       
-      {/* HLAVNÍ HEADER - SCHOVÁVAT NA MOBILU PŘI OTEVŘENÉM MENU */}
+      {/* HLAVNÍ HEADER - VŽDY FIXED NA STEJNÉ POZICI */}
       <header className={`
         fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ease-in-out
-        ${isMobileScreen && mobileMenuOpen ? '-translate-y-full opacity-0' : ''}
         ${isScrolled 
           ? 'bg-white/95 backdrop-blur-md shadow-lg' 
           : 'bg-transparent'

@@ -23,7 +23,7 @@ interface ServiceItem {
 }
 
 // Mobile Service Cards - Všechny 6 služeb, 3 řádky po 2
-function MobileServiceCards({ services, isMobile }: { services: ServiceItem[], isMobile: boolean }) {
+function MobileServiceCards({ services }: { services: ServiceItem[] }) {
   const getImageUrl = (service: ServiceItem) => {
     if (service.title.includes('Elektroinstalace')) return '/images/projects/části haly Tehovec/5.webp'
     if (service.title.includes('čerpadla')) return '/images/projects/klimatizace - Toušice/1.webp'
@@ -47,12 +47,8 @@ function MobileServiceCards({ services, isMobile }: { services: ServiceItem[], i
       {rows.map((row, rowIndex) => (
         <div key={rowIndex} className="grid grid-cols-2 gap-3 sm:gap-4">
           {row.map((service, serviceIndex) => (
-            <motion.div
+            <div
               key={serviceIndex}
-              initial={isMobile ? undefined : { opacity: 0, y: 20 }}
-              whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={isMobile ? undefined : { delay: (rowIndex * 2 + serviceIndex) * 0.1, duration: 0.6 }}
               className="w-full"
             >
               {/* Kompletní karta: fixní výška pro konzistentní layout */}
@@ -87,17 +83,13 @@ function MobileServiceCards({ services, isMobile }: { services: ServiceItem[], i
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       ))}
 
       {/* Speciální karta - Elektro pohotovost 24/7 */}
-      <motion.div
-        initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
-        whileInView={isMobile ? { opacity: 1 } : { opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={isMobile ? { duration: 0.3 } : { delay: 0.6, duration: 0.6 }}
+      <div
         className="bg-hero-dark-blue p-6 rounded-2xl shadow-lg text-center border border-hero-dark-blue/20 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
       >
         <div className="w-12 h-12 bg-hero-yellow/20 rounded-xl flex items-center justify-center mb-4 mx-auto hover:scale-110 transition-transform duration-300">
@@ -106,22 +98,18 @@ function MobileServiceCards({ services, isMobile }: { services: ServiceItem[], i
           </svg>
         </div>
         <h3 className="text-xl font-bold text-hero-white">Elektro pohotovost 24/7</h3>
-      </motion.div>
+      </div>
 
       {/* Tlačítko Více informací - PŘIDÁNO PRO MOBILE */}
-      <motion.a
+      <a
         href="/sluzby"
-        initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
-        whileInView={isMobile ? { opacity: 1 } : { opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={isMobile ? { duration: 0.3 } : { delay: 0.7, duration: 0.6 }}
         className="flex items-center justify-center gap-3 group cursor-pointer mt-6"
       >
         <span className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-black via-gray-800 via-gray-400 via-gray-800 to-black bg-clip-text text-transparent bg-[length:300%_auto] animate-gradient">
           Více informací
         </span>
         <ArrowRightIcon className="w-5 h-5 sm:w-7 sm:h-7 text-blue-600 group-hover:translate-x-2 group-hover:text-electric-500 transition-all duration-200 stroke-[3]" />
-      </motion.a>
+      </a>
     </div>
   )
 }
@@ -281,7 +269,7 @@ export default function Services() {
 
         {/* Mobile Services - 3 řádky po 2 službách */}
         <div className="block md:hidden space-y-6 mt-0 -mt-3">
-          <MobileServiceCards services={services} isMobile={isMobile} />
+          <MobileServiceCards services={services} />
         </div>
       </div>
     </section>
